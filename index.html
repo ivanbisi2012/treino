@@ -345,6 +345,50 @@ html:not(.js) .top,html:not(.js) .wrap,html:not(.js) .tabs{display:none!importan
   border-radius:8px;padding:4px 8px}
 .volchip b{color:var(--tx);font-family:var(--cond);font-size:14px;margin-left:6px}
 .btn[disabled]{opacity:.5}
+.fetabs{position:sticky;z-index:5;background:var(--bg);padding:9px 0 8px;margin-top:-9px}
+.pki{display:flex;align-items:center;gap:4px;width:100%;background:var(--surf);border:1px solid var(--line);
+  border-radius:12px;padding:0 12px 0 0;color:var(--tx)}
+.pki.arr{opacity:.5}
+.pkh{width:34px;min-height:50px;display:flex;align-items:center;justify-content:center;
+  color:var(--mut2);font-size:16px;cursor:grab;touch-action:none;flex:0 0 auto}
+.pkb{flex:1;min-width:0;display:flex;align-items:center;gap:9px;min-height:50px;padding:8px 0;
+  text-align:left;font-size:14px;color:var(--tx)}
+.pkb:active{opacity:.7}
+.ghost{position:fixed;left:0;top:0;z-index:99;pointer-events:none;margin:-21px 0 0 -66px;
+  background:var(--acc);color:var(--inv);padding:9px 14px;border-radius:11px;font-size:13px;font-weight:700;
+  box-shadow:var(--sh2);max-width:66vw;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+body.arrastando{user-select:none;-webkit-user-select:none}
+.ph{height:54px;border:2px dashed var(--acc);border-radius:13px;margin-bottom:9px;background:var(--surf2)}
+.fetab.alvo{background:var(--z4);color:#fff;border-color:var(--z4)}
+.fetab.alvo span{background:rgba(255,255,255,.25);color:#fff}
+.prow.ed{display:flex;align-items:center;width:100%;text-align:left}
+.prow.ed:active{background:var(--surf2)}
+.step.realce{outline:2px solid var(--z4);outline-offset:6px;border-radius:13px}
+#printarea{display:none}
+@media print{
+  header.top, nav.tabs, main.wrap, #fe-picker{display:none !important}
+  html, body{background:#fff !important;color:#000 !important}
+  #printarea{display:block}
+  .pr{font-family:Georgia,"Times New Roman",serif;color:#000;padding:0}
+  .pr h1{font-size:20pt;margin:0 0 2pt;letter-spacing:-.01em}
+  .pr .prs{font-size:9.5pt;color:#444;margin:0 0 16pt}
+  .pr h2{font-size:13pt;margin:16pt 0 5pt;border-bottom:1.4pt solid #000;padding-bottom:3pt;
+    page-break-after:avoid;display:flex;justify-content:space-between;align-items:baseline;gap:10pt}
+  .pr h2 span{font-size:9pt;font-weight:400;color:#444}
+  .pr table{width:100%;border-collapse:collapse;font-size:9pt;page-break-inside:auto}
+  .pr thead{display:table-header-group}
+  .pr tr{page-break-inside:avoid}
+  .pr th{text-align:left;font-size:7.5pt;text-transform:uppercase;letter-spacing:.08em;color:#444;
+    border-bottom:.8pt solid #999;padding:3pt 4pt}
+  .pr td{border-bottom:.5pt solid #ccc;padding:5pt 4pt;vertical-align:top}
+  .pr td.ex b{display:block;font-size:10pt;font-weight:700}
+  .pr td.ex i{display:block;font-size:7.5pt;color:#555;font-style:italic;margin-top:1pt}
+  .pr th.s, .pr td.s{width:34pt;text-align:center;border-left:.5pt solid #ccc}
+  .pr td.s{height:26pt}
+  .pr td.s span{color:#bbb}
+  .pr .prf{font-size:8pt;color:#555;margin-top:14pt}
+  @page{margin:14mm}
+}
 .fchip i{font-style:normal;color:var(--mut2);font-weight:600;margin-left:6px}
 .blk{display:flex;gap:8px;align-items:baseline;margin:14px 0 -2px;font-size:12.5px;color:var(--mut);line-height:1.35}
 .blk b{font-family:var(--cond);font-size:14px;font-weight:700;color:var(--tx);letter-spacing:.02em;
@@ -738,6 +782,8 @@ html:not(.js) .top,html:not(.js) .wrap,html:not(.js) .tabs{display:none!importan
   <!-- PERFIL -->
   <div class="view" id="v-perfil">
     <div id="plist"></div>
+    <button class="btn ghost" id="editar">Alterar todas as respostas</button>
+    <div class="note">Toque em qualquer linha acima para trocar só aquela resposta. Ao confirmar, a ficha automática é montada de novo.</div>
     <div class="metodo" id="pmetodo"></div>
 
     <div class="seclbl mt">Sua ficha</div>
@@ -777,11 +823,12 @@ html:not(.js) .top,html:not(.js) .wrap,html:not(.js) .tabs{display:none!importan
       Vá em Histórico e toque em Exportar backup. Limpar os dados do navegador apaga o histórico, e o backup é a única forma de recuperá-lo.
     </div>
 
-    <button class="btn ghost" id="editar" style="margin-top:22px">Alterar respostas e refazer a ficha</button>
     <div class="note">Refazer a ficha monta um novo ciclo de treinos. As sessões já registradas continuam no calendário e no histórico.</div>
   </div>
 
 </main>
+
+<div id="printarea" aria-hidden="true"></div>
 
 <nav class="tabs" id="tabs" aria-label="Seções do app">
   <button data-tab="home" class="sel"><svg aria-hidden="true" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M3 10.4 12 3l9 7.4V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Treinos</button>
@@ -1443,6 +1490,42 @@ function programaAtual(){
 function chaveRasc(i){ return localAtual().id + ":" + i; }
 function assinatura(p){ return p ? p.dias.map(d => d.cod + ":" + d.it.map(x => x[0]).join(",")).join("|") : ""; }
 
+/* ======================== IMPRESSÃO ======================== */
+function htmlImpressao(dias){
+  const pf = D.perfil || {}, loc = localAtual();
+  const hoje = new Date().toLocaleDateString("pt-BR", {day:"2-digit", month:"long", year:"numeric"});
+  return `<div class="pr">
+    <h1>${esc(pf.nome || "Treino")}</h1>
+    <p class="prs">${esc(TXT_OBJ[pf.objetivo] || "")} · ${esc(TXT_NIV[pf.nivel] || "")} · ${esc(TXT_DUR[pf.dur] || "")}
+      · ${esc(loc.nome)} · ${esc(hoje)}</p>` +
+    dias.map(d => {
+      const cols = Math.max.apply(null, d.it.map(x => x[1]).concat([1]));
+      return `<h2>${esc(d.cod)}<span>${esc(d.foco || "")} · cerca de ${d.min} min</span></h2>
+      <table><thead><tr>
+        <th class="ex">Exercício</th><th class="pr2">Prescrição</th><th class="pr2">Descanso</th>` +
+        Array.apply(null, {length:cols}).map((_,i) => `<th class="s">${i+1}ª</th>`).join("") +
+      `</tr></thead><tbody>` + d.it.map(x => {
+        const e = EX[x[0]]; if (!e) return "";
+        const car = !!e.car;
+        return `<tr>
+          <td class="ex"><b>${esc(e.n)}</b><i>${esc(e.c || "")}</i></td>
+          <td>${car ? esc(x[2]) + " em " + x[1] + " blocos" : x[1] + " × " + esc(x[2]) + (e.l ? " por lado" : "")}</td>
+          <td>${car ? "sem parar" : esc(x[3])}</td>` +
+          Array.apply(null, {length:cols}).map((_,i) =>
+            `<td class="s">${i < x[1] ? "" : "<span>—</span>"}</td>`).join("") + `</tr>`;
+      }).join("") + `</tbody></table>`;
+    }).join("") +
+    `<p class="prf">Anote carga e repetições de cada série nos quadros da direita.</p></div>`;
+}
+function imprimir(escopo){
+  const prog = programaAtual();
+  const dias = escopo === "dia"
+    ? [prog.dias[D.ultimoDia % prog.dias.length]]
+    : prog.dias;
+  $("#printarea").innerHTML = htmlImpressao(dias);
+  try { window.print(); } catch(e){}
+}
+
 /* ==================== FICHA MONTADA PELA PESSOA ==================== */
 /* faixa de séries por grupo muscular na semana, por objetivo */
 const ALVO_SERIES = {massa:[10,22], recomp:[9,20], definicao:[9,20],
@@ -1524,8 +1607,11 @@ function abrirFedit(){
 function feDiaAtual(){ return feDias[feDia]; }
 function renderFedit(){
   const pf = D.perfil || {}, d = feDiaAtual();
-  $("#fe-intro").innerHTML = "Arraste pelo <b>⠿</b> para trocar a ordem e toque no exercício para ajustar séries, repetições e descanso. "
-    + "Os números já entram no padrão de <b>" + esc((TXT_OBJ[pf.objetivo]||"").toLowerCase()) + "</b> — o quadro embaixo avisa quando a ficha sai do objetivo.";
+  $("#fe-intro").innerHTML = "Arraste pelo <b>⠿</b>: solte na lista para entrar numa posição, ou solte na aba de outro dia para mandar o exercício para lá. "
+    + "Toque no exercício para ajustar séries, repetições e descanso. Os números entram no padrão de <b>"
+    + esc((TXT_OBJ[pf.objetivo]||"").toLowerCase()) + "</b> — o quadro embaixo avisa quando a ficha sai do objetivo.";
+  const alt = document.querySelector("header.top");
+  if (alt) $("#fe-dias").style.top = alt.offsetHeight + "px";
   $("#fe-dias").innerHTML = feDias.map((x,i) =>
     `<button class="fetab${i===feDia?" sel":""}" data-d="${i}">${esc(x.cod)}<span>${x.it.length}</span></button>`).join("")
     + `<button class="fetab add" id="fe-adddia">+ dia</button>`;
@@ -1593,9 +1679,12 @@ function renderPicker(){
     if (!l.length) return "";
     return `<div class="eqg">${esc(NOMEP[pad] || pad)}</div><div class="pk">` + l.map(id => {
       const e = EX[id];
-      return `<button class="pki${usados[id]?" ja":""}" data-add="${id}">
+      return `<div class="pki${usados[id]?" ja":""}">
+        <span class="pkh" data-pk="${id}" aria-hidden="true">⠿</span>
         <span class="dot" style="background:${CORZ[e.z]}"></span>
-        <span class="pkn">${esc(e.n)}</span>${usados[id]?"<b>já está</b>":""}</button>`;
+        <button class="pkb" data-add="${id}" aria-label="Adicionar ${esc(e.n)} a este dia">
+          <span class="pkn">${esc(e.n)}</span>${usados[id]?"<b>já está</b>":""}</button>
+      </div>`;
     }).join("") + "</div>";
   }).join("");
 }
@@ -1642,51 +1731,121 @@ function ligarFedit(){
   });
   const rp = $("#fe-reps");
   if (rp) rp.onchange = () => { feDiaAtual().it[feAberto][2] = rp.value.trim() || "10"; renderFedit(); };
-  $("#fe-picker").querySelectorAll("[data-add]").forEach(b => b.onclick = () => {
+  $("#fe-picker").querySelectorAll(".pkb[data-add]").forEach(b => b.onclick = () => {
     const it = feDiaAtual().it;
     it.push(itemNovo(b.dataset.add, papelPorPos(it.length, b.dataset.add)));
     repapelar(it); renderFedit();
   });
   ligarArrasto();
 }
-/* arrastar para reordenar — funciona com dedo e com mouse */
-function ligarArrasto(){
-  const lista = $("#fe-lista");
-  lista.querySelectorAll(".fh").forEach(h => {
-    h.onpointerdown = ev => {
-      const el = h.closest(".fc");
-      if (!el) return;
-      ev.preventDefault();
-      let y0 = ev.clientY;
-      el.classList.add("arr");
-      try { h.setPointerCapture(ev.pointerId); } catch(e){}
-      h.onpointermove = e2 => {
-        el.style.transform = "translateY(" + (e2.clientY - y0) + "px)";
-        const r = el.getBoundingClientRect(), meio = r.top + r.height/2;
-        const irmaos = Array.prototype.slice.call(lista.querySelectorAll(".fc"));
-        for (let i = 0; i < irmaos.length; i++){
-          const o = irmaos[i]; if (o === el) continue;
-          const ro = o.getBoundingClientRect();
-          if (meio > ro.top && meio < ro.bottom){
-            const antes = irmaos.indexOf(o) < irmaos.indexOf(el);
-            el.style.transform = "";
-            lista.insertBefore(el, antes ? o : o.nextSibling);
-            y0 = e2.clientY;
-            break;
-          }
+/* ---------- arrasto estilo kanban ----------
+   solta na lista para entrar numa posição, ou na aba de outro dia para mandar para lá */
+let dgs = null;
+function alvoDoPonto(x, y){
+  const tabs = $("#fe-dias").querySelectorAll(".fetab[data-d]");
+  for (let i = 0; i < tabs.length; i++){
+    const r = tabs[i].getBoundingClientRect();
+    if (x >= r.left && x <= r.right && y >= r.top && y <= r.bottom)
+      return {t:"aba", d:parseInt(tabs[i].dataset.d,10), el:tabs[i]};
+  }
+  const lista = $("#fe-lista"), rl = lista.getBoundingClientRect();
+  if (y >= rl.top - 70 && y <= rl.bottom + 70){
+    const cards = lista.querySelectorAll(".fc");
+    let idx = cards.length;
+    for (let i = 0; i < cards.length; i++){
+      const r = cards[i].getBoundingClientRect();
+      if (y < r.top + r.height/2){ idx = i; break; }
+    }
+    return {t:"lista", i:idx};
+  }
+  return null;
+}
+function limparMarcas(){
+  $("#fe-dias").querySelectorAll(".fetab").forEach(t => t.classList.remove("alvo"));
+  const ph = $("#fe-ph"); if (ph) ph.remove();
+}
+function atualizarDrag(ev){
+  if (!dgs) return;
+  dgs.ghost.style.transform = "translate(" + ev.clientX + "px," + ev.clientY + "px)";
+  if (ev.clientY < 96) window.scrollBy(0, -16);
+  else if (ev.clientY > (window.innerHeight || 800) - 96) window.scrollBy(0, 16);
+  limparMarcas();
+  const a = alvoDoPonto(ev.clientX, ev.clientY);
+  dgs.alvo = a;
+  if (!a) return;
+  if (a.t === "aba"){ a.el.classList.add("alvo"); return; }
+  const lista = $("#fe-lista"), cards = lista.querySelectorAll(".fc");
+  const d = document.createElement("div");
+  d.id = "fe-ph"; d.className = "ph";
+  if (a.i >= cards.length) lista.appendChild(d); else lista.insertBefore(d, cards[a.i]);
+}
+function soltarDrag(){
+  if (!dgs) return;
+  const a = dgs.alvo, o = dgs.origem;
+  if (dgs.ghost) dgs.ghost.remove();
+  if (dgs.el) dgs.el.classList.remove("arr");
+  limparMarcas();
+  document.body.classList.remove("arrastando");
+  dgs = null;
+  if (a){
+    if (o.tipo === "novo"){
+      if (a.t === "aba"){
+        const it = feDias[a.d].it;
+        it.push(itemNovo(o.id, papelPorPos(it.length, o.id)));
+        repapelar(it);
+      } else {
+        const it = feDiaAtual().it;
+        it.splice(a.i, 0, itemNovo(o.id, papelPorPos(a.i, o.id)));
+        repapelar(it);
+      }
+    } else {
+      const it = feDiaAtual().it, x = it[o.i];
+      if (x){
+        if (a.t === "aba" && a.d !== feDia){
+          it.splice(o.i, 1);
+          feDias[a.d].it.push(x);
+          repapelar(it); repapelar(feDias[a.d].it);
+        } else if (a.t === "lista"){
+          let destino = a.i;
+          it.splice(o.i, 1);
+          if (destino > o.i) destino--;
+          it.splice(Math.max(0, Math.min(it.length, destino)), 0, x);
+          repapelar(it);
         }
-      };
+      }
+    }
+  }
+  feAberto = -1;
+  renderFedit();
+}
+function ligarArrasto(){
+  const liga = (h, origem, el) => {
+    h.onpointerdown = ev => {
+      if (typeof ev.button === "number" && ev.button !== 0) return;
+      if (ev.preventDefault) ev.preventDefault();
+      const nome = origem.tipo === "novo"
+        ? (EX[origem.id] || {}).n
+        : (EX[(feDiaAtual().it[origem.i] || [])[0]] || {}).n;
+      const g = document.createElement("div");
+      g.className = "ghost";
+      g.textContent = nome || "";
+      document.body.appendChild(g);
+      document.body.classList.add("arrastando");
+      if (el) el.classList.add("arr");
+      dgs = {origem:origem, ghost:g, el:el, alvo:null};
+      try { h.setPointerCapture(ev.pointerId); } catch(e){}
+      atualizarDrag(ev);
+      h.onpointermove = atualizarDrag;
       h.onpointerup = h.onpointercancel = () => {
-        h.onpointermove = null; h.onpointerup = null;
-        el.style.transform = ""; el.classList.remove("arr");
-        const ordem = Array.prototype.map.call(lista.querySelectorAll(".fc"), c => parseInt(c.dataset.i,10));
-        feDiaAtual().it = ordem.map(i => feDiaAtual().it[i]);
-        repapelar(feDiaAtual().it);
-        feAberto = -1;
-        renderFedit();
+        h.onpointermove = null; h.onpointerup = null; h.onpointercancel = null;
+        soltarDrag();
       };
     };
-  });
+  };
+  $("#fe-lista").querySelectorAll(".fh").forEach(h =>
+    liga(h, {tipo:"mover", i:parseInt(h.dataset.h,10)}, h.closest(".fc")));
+  $("#fe-picker").querySelectorAll(".pkh").forEach(h =>
+    liga(h, {tipo:"novo", id:h.dataset.pk}, h.closest(".pki")));
 }
 $("#fe-nome").oninput = () => {
   if (!feDias) return;
@@ -1812,7 +1971,7 @@ function renderLocalSetup(){
     renderLocalSetup();
   });
 }
-function abrirSetup(edicao){
+function abrirSetup(edicao, focar){
   listaLocais();
   form = D.perfil ? JSON.parse(JSON.stringify(D.perfil))
                   : {nome:"", sexo:null, objetivo:null, freq:null, dur:null, nivel:null, enfase:"equilibrado", local:null};
@@ -1834,6 +1993,13 @@ function abrirSetup(edicao){
   renderSetup();
   mostrar("setup");
   $("#back").style.display = edicao ? "flex" : "none";
+  if (focar) setTimeout(() => {
+    const el = $("#" + focar), passo = el && el.closest ? el.closest(".step") : null;
+    if (!el) return;
+    try { (passo || el).scrollIntoView({block:"center", behavior:"smooth"}); } catch(e){}
+    if (passo){ passo.classList.add("realce"); setTimeout(() => passo.classList.remove("realce"), 1600); }
+    if (focar === "q-nome") el.focus();
+  }, 60);
 }
 
 /* ---------- pergunta de início de semana ---------- */
@@ -2592,18 +2758,21 @@ function renderPerfil(){
   const p = D.perfil;
   $("#ttl").textContent = "Perfil";
   $("#stl").textContent = "respostas que montam a ficha";
-  const linha = (l,v) => `<div class="prow"><div style="flex:1;min-width:0"><div class="pl">${l}</div><div class="pv">${esc(v)}</div></div></div>`;
+  const linha = (l,v,alvo) => alvo
+    ? `<button class="prow ed" data-q="${alvo}"><div style="flex:1;min-width:0"><div class="pl">${l}</div><div class="pv">${esc(v)}</div></div><span class="chev">›</span></button>`
+    : `<div class="prow"><div style="flex:1;min-width:0"><div class="pl">${l}</div><div class="pv">${esc(v)}</div></div></div>`;
   $("#plist").innerHTML =
-    linha("Nome", p.nome) +
-    linha("Sexo", TXT_SEXO[p.sexo]) +
-    linha("Objetivo", TXT_OBJ[p.objetivo]) +
-    linha("Frequência", p.freq + "x por semana") +
-    linha("Tempo por sessão", TXT_DUR[p.dur]) +
-    linha("Experiência", TXT_NIV[p.nivel]) +
-    linha("Ênfase", TXT_ENF[p.enfase]) +
+    linha("Nome", p.nome, "q-nome") +
+    linha("Sexo", TXT_SEXO[p.sexo], "q-sexo") +
+    linha("Objetivo", TXT_OBJ[p.objetivo], "q-obj") +
+    linha("Frequência", p.freq + "x por semana", "q-freq") +
+    linha("Tempo por sessão", TXT_DUR[p.dur], "q-dur") +
+    linha("Experiência", TXT_NIV[p.nivel], "q-nivel") +
+    linha("Ênfase", TXT_ENF[p.enfase], "q-enf") +
     linha("Ficha em uso", D.modo === "custom" && temFichaPropria() ? "Montada por você" : "Automática, pelo objetivo") +
     linha("Esta semana", sessoesSemana(Date.now()).length + " de " + metaSemana() + (metaSemana() === 1 ? " treino" : " treinos"));
   $("#pmetodo").innerHTML = "<b>" + esc(TXT_OBJ[p.objetivo] || "") + " · como a ficha foi montada</b>" + esc(METODO[p.objetivo] || "");
+  $("#plist").querySelectorAll(".prow.ed").forEach(b => b.onclick = () => abrirSetup(true, b.dataset.q));
   const propria = temFichaPropria();
   $("#pficha").innerHTML =
     `<div class="opts">
@@ -2612,7 +2781,11 @@ function renderPerfil(){
        <button class="opt${D.modo === "custom" ? " sel" : ""}" data-md="custom">
          <div class="t">Minha ficha</div><div class="s">${propria ? "Montada por você, " + fichaSalva().dias.length + (fichaSalva().dias.length===1?" dia":" dias") : "Ainda não montada neste lugar"}</div></button>
      </div>
-     <button class="btn ghost" id="pedit">${propria ? "Editar minha ficha" : "Montar minha ficha"}</button>`;
+     <button class="btn ghost" id="pedit">${propria ? "Editar minha ficha" : "Montar minha ficha"}</button>
+     <div class="seclbl mt">Imprimir</div>
+     <button class="btn ghost" id="pimp-dia">Imprimir o próximo treino</button>
+     <button class="btn ghost" id="pimp-sem">Imprimir a semana inteira</button>
+     <div class="note">Sai com uma coluna em branco por série, para anotar carga e repetições à mão. Na janela de impressão dá para escolher salvar em PDF.</div>`;
   $("#pficha").querySelectorAll("[data-md]").forEach(b => b.onclick = async () => {
     if (b.dataset.md === "custom" && !propria) return abrirFedit();
     D.modo = b.dataset.md;
@@ -2622,6 +2795,8 @@ function renderPerfil(){
     renderPerfil();
   });
   $("#pedit").onclick = () => abrirFedit();
+  $("#pimp-dia").onclick = () => imprimir("dia");
+  $("#pimp-sem").onclick = () => imprimir("semana");
   const atual = localAtual().id;
   $("#plocais").innerHTML = listaLocais().map(l =>
     `<button class="hrow" data-l="${esc(l.id)}">
