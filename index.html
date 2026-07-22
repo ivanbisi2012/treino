@@ -250,6 +250,59 @@ html:not(.js) .top,html:not(.js) .wrap,html:not(.js) .tabs{display:none!importan
 /* ====================== TREINO ====================== */
 .prog{height:4px;background:var(--surf2);border-radius:3px;overflow:hidden;margin-top:11px}
 .prog i{display:block;height:100%;background:var(--z4);width:0;transition:width .3s ease}
+
+/* ====================== CRONOMETRO ====================== */
+.crono{display:none;gap:8px;max-width:660px;margin:11px auto 0}
+.crono.on{display:flex}
+.cbox{flex:1 1 0;min-width:0;background:var(--surf2);border:1px solid var(--line);border-radius:12px;
+  padding:6px 11px 8px;text-align:left;display:block;min-height:56px;
+  transition:border-color .2s,background .2s,color .2s}
+.cbox .cl{display:block;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--mut2);font-weight:700;line-height:1.35;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cbox .cv{font-family:var(--cond);font-weight:700;font-size:26px;line-height:1.1;color:var(--tx);
+  font-variant-numeric:tabular-nums;letter-spacing:.01em}
+.cbox .cx{float:right;font-size:11.5px;color:var(--mut);font-weight:600;margin-top:9px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:52%}
+.cbox:active{background:var(--line)}
+.cbox.pau{border-color:var(--z3)}
+.cbox.pau .cv{color:var(--z3)}
+.cbox.run{border-color:var(--z2)}
+.cbox.run .cv{color:var(--z2)}
+.cbox.ok{border-color:var(--z4)}
+.cbox.ok .cv{color:var(--z4)}
+.cbox.over{border-color:var(--z3)}
+.cbox.over .cv{color:var(--z3)}
+.dbtn{width:56px;min-height:48px;border-radius:11px;background:var(--surf2);border:1px solid var(--line);
+  color:var(--mut);flex:0 0 auto;display:flex;align-items:center;justify-content:center;
+  font-family:var(--cond);font-weight:700;font-size:16px;font-variant-numeric:tabular-nums;
+  transition:background .15s,color .15s,border-color .15s}
+.dbtn svg{width:19px;height:19px}
+.dbtn:active{background:var(--line)}
+.dbtn.on{background:var(--z2);border-color:var(--z2);color:#fff}
+.dbtn.trab{background:var(--z5);border-color:var(--z5);color:#fff}
+.cbox.trab{border-color:var(--z5)}
+.cbox.trab .cv{color:var(--z5)}
+.dbtn.done{color:var(--z4);border-color:var(--line2)}
+.copyln{display:flex;align-items:center;gap:7px;width:100%;min-height:44px;margin-top:6px;
+  font-size:12.5px;color:var(--mut);text-align:left;font-weight:600}
+.copyln:active{color:var(--tx)}
+.eqtag{font-family:var(--body);font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+  padding:2px 7px;border-radius:6px;background:var(--line);color:var(--mut);margin-left:7px;
+  vertical-align:2px;display:inline-block}
+.opt.sel .eqtag{background:var(--z4);color:#fff}
+.eqrow{display:flex;align-items:center;gap:13px}
+.eqtx{flex:1;min-width:0}
+.eqart{width:64px;height:48px;flex:0 0 auto;color:var(--mut);background:var(--bg2);
+  border:1px solid var(--line);border-radius:10px;padding:1px}
+.opt.sel .eqart{color:var(--z4);border-color:var(--z4)}
+.fchip i{font-style:normal;color:var(--mut2);font-weight:600;margin-left:6px}
+.blk{display:flex;gap:8px;align-items:baseline;margin:14px 0 -2px;font-size:12.5px;color:var(--mut);line-height:1.35}
+.blk b{font-family:var(--cond);font-size:14px;font-weight:700;color:var(--tx);letter-spacing:.02em;
+  text-transform:uppercase;flex:0 0 auto}
+.frase{margin-top:14px;padding:15px 16px;border-radius:13px;background:var(--surf2);border:1px solid var(--line)}
+.frase p{font-family:var(--cond);font-weight:600;font-size:19px;line-height:1.3;color:var(--tx);margin:0}
+.frase span{display:block;margin-top:9px;font-size:12px;color:var(--mut);font-weight:700;
+  letter-spacing:.07em;text-transform:uppercase}
 .ex{background:var(--surf);border:1px solid var(--line);border-radius:15px;margin-bottom:11px;
   overflow:hidden;box-shadow:var(--sh)}
 .ex.bs{border-left:3px solid var(--z5)}
@@ -450,6 +503,18 @@ html:not(.js) .top,html:not(.js) .wrap,html:not(.js) .tabs{display:none!importan
       </button>
     </div>
   </div>
+  <div class="crono" id="crono">
+    <button class="cbox" id="c-tot">
+      <span class="cl" id="c-tot-l">Treino</span>
+      <span class="cx" id="c-tot-x">pausar</span>
+      <span class="cv" id="c-tot-v">00:00</span>
+    </button>
+    <button class="cbox" id="c-dsc">
+      <span class="cl" id="c-dsc-l">Descanso</span>
+      <span class="cx" id="c-dsc-x"></span>
+      <span class="cv" id="c-dsc-v">--:--</span>
+    </button>
+  </div>
   <div class="prog" id="pbar" style="display:none" role="progressbar" aria-label="Progresso da sessão"><i></i></div>
 </header>
 
@@ -534,6 +599,7 @@ html:not(.js) .top,html:not(.js) .wrap,html:not(.js) .tabs{display:none!importan
       <div class="of">Nota da sessão · 1 a 10</div>
     </div>
     <div class="msg" id="rmsg"></div>
+    <div class="frase" id="rfrase"></div>
     <div class="brk" id="rbrk"></div>
     <div class="passo" id="rpasso"></div>
     <div class="bar" style="margin-top:8px">
@@ -659,9 +725,9 @@ html:not(.js) .top,html:not(.js) .wrap,html:not(.js) .tabs{display:none!importan
    u = unidade de registro · nv = experiência mínima (1 iniciante) */
 const EX = {
 E01:{g:"sup_reto",q:["hal","ban"],n:"Supino reto com halteres",z:1,p:"pe_h",c:"Empurre o banco para longe do peito, não o peso para o teto.",e:["Cotovelos abertos a 90° — principal causa de dor no ombro.","Não descer até a linha do peito: perde a vantagem do halter."]},
-E02:{g:"sup_incl",q:["hal","ban"],n:"Supino inclinado com halteres",z:2,p:"pe_h",c:"Imagine empurrar contra uma parede acima e à frente de você.",e:["Inclinação acima de 45° transforma em desenvolvimento.","Arquear a lombar para conseguir mais carga."]},
-E03:{g:"cruc",q:["hal","ban"],n:"Crucifixo inclinado",z:3,p:"pe_h",c:"Abrace uma árvore muito larga.",e:["Dobrar e estender o cotovelo — vira supino leve.","Peso alto: é exercício de amplitude, não de carga."]},
-E04:{g:"desenv_sent",q:["hal","ban"],n:"Desenvolvimento com halteres sentado",z:2,p:"pe_v",c:"Costelas para baixo, glúteo apertado, e só então empurre.",e:["Hiperextensão da lombar.","Descer o cotovelo muito abaixo de 90°."]},
+E02:{g:"sup_incl",q:["hal","bni"],n:"Supino inclinado com halteres",z:2,p:"pe_h",c:"Imagine empurrar contra uma parede acima e à frente de você.",e:["Inclinação acima de 45° transforma em desenvolvimento.","Arquear a lombar para conseguir mais carga."]},
+E03:{g:"cruc",q:["hal","bni"],n:"Crucifixo inclinado",z:3,p:"pe_h",c:"Abrace uma árvore muito larga.",e:["Dobrar e estender o cotovelo — vira supino leve.","Peso alto: é exercício de amplitude, não de carga."]},
+E04:{g:"desenv_sent",q:["hal","bni"],n:"Desenvolvimento com halteres sentado",z:2,p:"pe_v",c:"Costelas para baixo, glúteo apertado, e só então empurre.",e:["Hiperextensão da lombar.","Descer o cotovelo muito abaixo de 90°."]},
 E05:{g:"lateral",q:["hal"],n:"Elevação lateral",z:3,p:"ombro",c:"Conduza pelo cotovelo; a mão apenas vem junto.",e:["Balanço de tronco para dar impulso.","Subir acima da linha do ombro — aí é trapézio."]},
 E06:{g:"tri_alto",q:["hal","ban"],n:"Tríceps testa com halteres",z:2,p:"tri",c:"Só o antebraço se move. Tudo o mais está congelado.",e:["Mover o ombro — vira pullover.","Abrir os cotovelos para os lados."]},
 E07:{g:"dip",q:["ban"],n:"Mergulho no banco",z:3,p:"tri",pc:1,c:"Deslize rente ao banco, como se estivesse encostado numa parede.",e:["Descer abaixo de 90° estressa a frente do ombro.","Afastar o quadril do banco."]},
@@ -713,9 +779,9 @@ E52:{q:["hal"],n:"Caminhada do fazendeiro",z:5,p:"cond",u:"seg",c:"Ombros para t
 E53:{n:"Abdominal bicicleta",z:4,p:"core",pc:1,c:"Gire pelo tronco, não pelo cotovelo.",e:["Puxar a nuca com a mão.","Velocidade alta sem rotação real."]},
 E54:{q:["hal"],n:"Prancha com remada",z:4,p:"core",nv:2,c:"O quadril fica imóvel enquanto o halter sobe.",e:["Rotação do quadril a cada remada.","Pés muito juntos."]},
 E55:{g:"unilat_perna",q:["hal"],n:"Afundo reverso",z:2,p:"quad",l:1,c:"Dê o passo para trás e desça em linha reta.",e:["Passo curto demais.","Apoiar o peso na perna de trás."]},
-E56:{q:["hal","ban"],n:"Desenvolvimento Arnold",z:2,p:"pe_v",c:"Gire o punho durante a subida, terminando com as palmas à frente.",e:["Girar só no fim do movimento.","Arquear a lombar para empurrar."]},
+E56:{q:["hal","bni"],n:"Desenvolvimento Arnold",z:2,p:"pe_v",c:"Gire o punho durante a subida, terminando com as palmas à frente.",e:["Girar só no fim do movimento.","Arquear a lombar para empurrar."]},
 E57:{g:"sup_reto",q:["bar","ban"],n:"Supino reto com barra",z:1,p:"pe_h",nv:2,c:"Empurre o banco para longe das costas, não a barra para o teto.",e:["Quicar a barra no peito para ganhar impulso.","Cotovelos abertos a 90° do tronco."]},
-E58:{g:"sup_incl",q:["bar","ban"],n:"Supino inclinado com barra",z:2,p:"pe_h",nv:2,c:"A barra desce na linha da clavícula, não no meio do peito.",e:["Inclinação acima de 45°, que vira desenvolvimento.","Levantar o quadril do banco."]},
+E58:{g:"sup_incl",q:["bar","bni"],n:"Supino inclinado com barra",z:2,p:"pe_h",nv:2,c:"A barra desce na linha da clavícula, não no meio do peito.",e:["Inclinação acima de 45°, que vira desenvolvimento.","Levantar o quadril do banco."]},
 E59:{g:"militar",q:["bar"],n:"Desenvolvimento militar com barra",z:1,p:"pe_v",nv:2,c:"Aperte glúteo e abdômen antes de tirar a barra do peito.",e:["Arquear a lombar para compensar a mobilidade.","Não passar a cabeça pela barra no topo."]},
 E60:{g:"remada_curv",q:["bar"],n:"Remada curvada com barra",z:1,p:"pu_h",nv:2,c:"Tronco a 45° e a barra sobe até o umbigo.",e:["Subir o tronco a cada repetição.","Coluna arredondada — o erro de maior risco aqui."]},
 E61:{g:"agacho",q:["bar","rck"],n:"Agachamento com barra",z:1,p:"quad",nv:2,c:"Sente entre os calcanhares, joelho acompanhando a ponta do pé.",e:["Joelho colapsando para dentro na subida.","Parar acima do paralelo."]},
@@ -739,8 +805,8 @@ E78:{g:"remada_maq",q:["rmq"],n:"Remada na máquina",z:2,p:"pu_h",c:"Peito firme
 E79:{g:"desenv_sent",q:["dmq"],n:"Desenvolvimento na máquina",z:2,p:"pe_v",c:"Costas coladas no encosto do início ao fim.",e:["Descolar a lombar do encosto.","Descer o punho abaixo da linha da orelha."]},
 E80:{g:"pant_pe",q:["lgp"],n:"Panturrilha no leg press",z:3,p:"pant",c:"Alongue no fundo por dois segundos, contados.",e:["Repetições rápidas com meia amplitude.","Dobrar o joelho para empurrar."]},
 E81:{g:"abducao",q:["abd"],n:"Cadeira abdutora",z:3,p:"glu",c:"Tronco levemente à frente para recrutar mais glúteo.",e:["Jogar o corpo para trás no esforço.","Voltar batendo as placas."]},
-E82:{g:"cardio_maq",q:["crd"],n:"Esteira em ritmo forte",z:5,p:"cond",u:"seg",c:"Ritmo em que dá para falar uma frase curta, não uma conversa.",e:["Segurar no apoio, o que tira o esforço.","Começar rápido demais e parar no meio."]},
-E83:{g:"cardio_maq",q:["crd"],n:"Bicicleta ergométrica",z:5,p:"cond",u:"seg",c:"Cadência alta com carga média, quadril firme no selim.",e:["Selim baixo demais, que castiga o joelho.","Pedalar despencado sobre o guidão."]},
+E82:{g:"cardio_maq",q:["crd"],n:"Esteira progressiva",z:5,p:"cond",u:"seg",car:1,cu:"km/h",c:"Sobe a velocidade a cada bloco e não segura no apoio.",e:["Segurar no corrimão, o que tira metade do esforço.","Começar rápido demais e não sustentar o bloco final."]},
+E83:{g:"cardio_maq",q:["crd"],n:"Bicicleta progressiva",z:5,p:"cond",u:"seg",car:1,cu:"nível",c:"Sobe o nível a cada bloco mantendo a cadência, quadril firme no selim.",e:["Selim baixo demais, que castiga o joelho.","Pedalar despencado sobre o guidão."]},
 E84:{n:"Flexão pique",z:2,p:"pe_v",pc:1,nv:2,c:"Quadril alto e a cabeça desce entre as mãos.",e:["Quadril baixo, que vira flexão comum.","Cotovelos abrindo para os lados."]},
 E85:{q:["ela"],n:"Desenvolvimento com elástico",z:3,p:"pe_v",c:"Pise firme no elástico e empurre em linha reta acima da cabeça.",e:["Arquear a lombar para vencer a resistência.","Soltar a volta sem controle."]},
 E86:{g:"stiff",q:["ela"],n:"Stiff com elástico",z:3,p:"post",c:"Quadril para trás, elástico rente à perna.",e:["Dobrar o joelho e virar agachamento.","Arredondar a lombar no fim do movimento."]},
@@ -771,27 +837,59 @@ const POOL = {
 
 /* equipamento — o que cada lugar de treino pode ter */
 const EQP = [
-  {v:"hal", t:"Halteres",                   g:"Peso livre"},
-  {v:"bar", t:"Barra e anilhas",            g:"Peso livre"},
-  {v:"ban", t:"Banco",                      g:"Peso livre"},
-  {v:"rck", t:"Suporte de barra",           g:"Peso livre"},
-  {v:"bfx", t:"Barra fixa",                 g:"Peso livre"},
-  {v:"ela", t:"Elástico",                   g:"Peso livre"},
-  {v:"pol", t:"Polia alta e baixa",         g:"Polia"},
-  {v:"smq", t:"Supino na máquina",          g:"Máquinas"},
-  {v:"voa", t:"Voador / peck deck",         g:"Máquinas"},
-  {v:"dmq", t:"Desenvolvimento na máquina", g:"Máquinas"},
-  {v:"rmq", t:"Remada na máquina",          g:"Máquinas"},
-  {v:"lgp", t:"Leg press",                  g:"Máquinas"},
-  {v:"ext", t:"Cadeira extensora",          g:"Máquinas"},
-  {v:"flx", t:"Mesa flexora",               g:"Máquinas"},
-  {v:"abd", t:"Cadeira abdutora",           g:"Máquinas"},
-  {v:"crd", t:"Esteira ou bike",            g:"Cardio"}
+  {v:"hal", t:"Halteres",                   g:"Peso livre", d:"Pesos de mão, um par para cada carga, geralmente num rack inclinado"},
+  {v:"bar", t:"Barra e anilhas",            g:"Peso livre", d:"Barra longa de metal com discos que entram nas duas pontas"},
+  {v:"ban", t:"Banco reto",                 g:"Peso livre", d:"Banco acolchoado fixo, na horizontal, sem encosto que levanta"},
+  {v:"bni", t:"Banco inclinado",            g:"Peso livre", d:"Banco com encosto que sobe e trava em vários ângulos, para supino inclinado e desenvolvimento sentado"},
+  {v:"rck", t:"Suporte de barra",           g:"Peso livre", d:"Torre ou cavalete que segura a barra na altura do ombro para agachar"},
+  {v:"bfx", t:"Barra fixa",                 g:"Peso livre", d:"Barra alta presa na parede ou na estrutura, para puxar o corpo pendurado"},
+  {v:"ela", t:"Elástico",                   g:"Peso livre", d:"Faixa ou tubo de borracha com alças, dobra e guarda na mão"},
+  {v:"pol", t:"Polia alta e baixa",         g:"Polia",      d:"Torre com cabo de aço, roldana e pilha de placas; pega em cima e embaixo"},
+  {v:"smq", t:"Supino na máquina",          g:"Máquinas",   d:"Sentado de costas para o encosto, empurra dois pegadores para a frente"},
+  {v:"voa", t:"Voador / peck deck",         g:"Máquinas",   d:"Sentado, fecha os dois braços abertos na frente do peito"},
+  {v:"dmq", t:"Desenvolvimento na máquina", g:"Máquinas",   d:"Sentado, empurra os pegadores para cima, acima da cabeça"},
+  {v:"rmq", t:"Remada na máquina",          g:"Máquinas",   d:"Sentado com o peito apoiado, puxa os pegadores para trás"},
+  {v:"lgp", t:"Leg press",                  g:"Máquinas",   d:"Deitado ou reclinado, empurra uma plataforma grande com os pés"},
+  {v:"ext", t:"Cadeira extensora",          g:"Máquinas",   d:"Sentado, estica os joelhos com o rolo na frente do tornozelo"},
+  {v:"flx", t:"Mesa flexora",               g:"Máquinas",   d:"Deitado de barriga para baixo ou sentado, dobra o joelho puxando o rolo"},
+  {v:"abd", t:"Cadeira abdutora",           g:"Máquinas",   d:"Sentado, abre as pernas empurrando os dois apoios laterais"},
+  {v:"crd", t:"Esteira ou bike",            g:"Cardio",     d:"Esteira, bicicleta ergométrica vertical ou bike de spinning"}
 ];
+/* desenho de cada aparelho — traço simples, acompanha o tema, some 4 KB no arquivo */
+const EQ_ART = {
+hal:'<rect x="25" y="21" width="14" height="6" rx="2"/><rect x="15" y="14" width="9" height="20" rx="3"/><rect x="40" y="14" width="9" height="20" rx="3"/><path d="M11 18v12M53 18v12"/>',
+bar:'<path d="M5 24h54"/><rect x="13" y="11" width="6" height="26" rx="2.5"/><rect x="21" y="16" width="4" height="16" rx="2"/><rect x="45" y="11" width="6" height="26" rx="2.5"/><rect x="39" y="16" width="4" height="16" rx="2"/>',
+ban:'<rect x="7" y="20" width="50" height="7" rx="3.5"/><path d="M16 27v13M48 27v13M11 40h10M43 40h10"/>',
+bni:'<path d="M26 27h31a3.5 3.5 0 0 1 0 7H26z"/><path d="M26 34 L9 21 L13 15.5 L30 28"/><path d="M34 34v7M52 34v7M30 41h8M48 41h8"/>',
+rck:'<path d="M15 42V7M49 42V7"/><path d="M8 42h14M42 42h14"/><path d="M15 18h7M49 18h-7"/><path d="M6 15h52"/>',
+bfx:'<path d="M7 7v14M57 7v14"/><path d="M7 14h50"/><rect x="22" y="14" width="5" height="7" rx="2.5"/><rect x="37" y="14" width="5" height="7" rx="2.5"/>',
+ela:'<path d="M15 18c13 5 21 5 34 0"/><path d="M15 30c13-5 21-5 34 0"/><rect x="6" y="17" width="7" height="14" rx="3.5"/><rect x="51" y="17" width="7" height="14" rx="3.5"/>',
+pol:'<path d="M11 43V6h10v37"/><path d="M13 21h6M13 27h6M13 33h6"/><path d="M21 8h6"/><circle cx="29" cy="10" r="2.6"/><path d="M29 13v15"/><path d="M22 28h14"/><path d="M7 43h18"/>',
+smq:'<path d="M23 32h16"/><path d="M39 32V12"/><path d="M25 32v9M38 32v9"/><path d="M20 41h23"/><path d="M39 21H14"/><path d="M14 16v10"/><path d="M39 16h-6"/>',
+voa:'<rect x="25" y="22" width="14" height="16" rx="2"/><path d="M25 25 L9 15"/><path d="M39 25 L55 15"/><path d="M9 11v8M55 11v8"/><path d="M32 38v5"/><path d="M22 43h20"/>',
+dmq:'<path d="M23 34h16"/><path d="M39 34V17"/><path d="M25 34v8M38 34v8"/><path d="M20 42h23"/><path d="M39 17 L27 9"/><path d="M20 7h14"/><path d="M27 9V7"/>',
+rmq:'<path d="M26 33h14"/><path d="M40 33v-8"/><path d="M28 33v8M39 33v8"/><path d="M23 41h21"/><path d="M20 15v16"/><path d="M20 19h-8M20 27h-8"/><path d="M12 16v7M12 24v7"/>',
+lgp:'<path d="M13 40 L45 12"/><path d="M35 5 L53 19"/><rect x="6" y="30" width="15" height="9" rx="2"/><path d="M8 39v5M19 39v5"/><path d="M4 44h19"/>',
+ext:'<path d="M18 28h17"/><path d="M18 28V13"/><path d="M20 28v11M34 28v11"/><path d="M15 39h23"/><path d="M35 28v7"/><circle cx="44" cy="35" r="4.5"/><path d="M35 35h4.5"/>',
+flx:'<path d="M8 23h34"/><path d="M13 23v13M37 23v13"/><path d="M9 36h34"/><path d="M42 23 L49 29"/><circle cx="52" cy="31" r="4.5"/>',
+abd:'<rect x="25" y="14" width="14" height="16" rx="2"/><path d="M25 28 L11 38"/><path d="M39 28 L53 38"/><path d="M11 38v5M53 38v5"/><path d="M32 30v9"/><path d="M22 43h20"/>',
+crd:'<rect x="6" y="31" width="36" height="7" rx="3.5"/><path d="M41 32 L49 12"/><path d="M44 12h14"/><path d="M10 38v5M38 38v5"/>'
+};
+function artEq(v){
+  return '<svg class="eqart" viewBox="0 0 64 48" fill="none" stroke="currentColor" stroke-width="1.9" '
+       + 'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (EQ_ART[v] || "") + '</svg>';
+}
 const EQ_TUDO = EQP.map(e => e.v);
 const EQ_GRUPOS = ["Peso livre","Polia","Máquinas","Cardio"];
 /* lista antiga usava um único código "maq" para tudo */
 const EQ_MIGRA = {maq:["smq","voa","dmq","rmq","lgp","ext","flx","abd"]};
+/* quem tem banco inclinado tem banco: ele deita na horizontal */
+const EQ_IMPLICA = {bni:["ban"]};
+function expandirEq(eq){
+  const r = (eq || []).slice();
+  (eq || []).forEach(v => (EQ_IMPLICA[v] || []).forEach(x => { if (r.indexOf(x) < 0) r.push(x); }));
+  return r;
+}
 function temEq(id, eq){
   const q = EX[id] && EX[id].q;
   if (!q || !q.length) return true;
@@ -849,6 +947,13 @@ const ISO = ["E03","E05","E07","E11","E12","E14","E19","E20","E24","E25","E26","
              "E34","E36","E43","E44","E45","E64","E68","E69","E70","E71","E72","E73","E75","E76","E77",
              "E80","E81","E85","E86","E87","E88","E89"];
 const NEX  = {curto:5, medio:7, longo:9};
+/* cardio de aparelho: blocos progressivos, sem carga — [segundos, ritmo, nome do bloco] */
+const CARDIO_BLOCOS = {
+  curto: [[120,"leve","aquecimento"],[120,"médio","base"],[120,"forte","pico"]],
+  medio: [[120,"leve","aquecimento"],[240,"médio","base"],[240,"forte","pico"]],
+  longo: [[120,"leve","aquecimento"],[300,"médio","base"],[300,"forte","pico"]]
+};
+const RITMO = {leve:"dá para conversar", "médio":"respiração acelerada, frases curtas", forte:"só palavras soltas"};
 const LIM  = {curto:42, medio:62, longo:78};
 const FIN  = {emagrecer:1, definicao:1, recomp:1, saude:1, massa:0, forca:0};
 const BISET= {emagrecer:1, definicao:1, saude:1, recomp:1, massa:0, forca:0};
@@ -902,6 +1007,7 @@ function aplicarEnfase(b, enf, tipo){
 function estimar(it){
   let seg = 0;
   it.forEach((x, i) => {
+    if (x[6] && x[6].length){ x[6].forEach(b => { seg += b[0]; }); return; }
     const e = EX[x[0]], sr = x[1], d = parseInt(x[3], 10) || 60;
     const exec = e.u === "seg" ? (parseInt(x[2], 10) || 40) : (e.l ? 72 : 42);
     const dupla = x[5] && it[i-1] && it[i-1][5] === x[5];
@@ -929,11 +1035,11 @@ function ajustarTempo(it, lim, dur){
   let g = 0;
   while (estimar(it) > lim && g++ < 80){
     let i, alvo = -1;
-    for (i = it.length-1; i >= 0; i--) if ((it[i][4] === "C" || it[i][4] === "D") && it[i][1] > 2){ alvo = i; break; }
+    for (i = it.length-1; i >= 0; i--) if ((it[i][4] === "C" || it[i][4] === "D") && it[i][1] > 2 && !it[i][6]){ alvo = i; break; }
     if (alvo >= 0){ it[alvo][1] -= 1; continue; }
     if (it.length > 4){
       let k = -1;
-      for (i = it.length-1; i >= 0; i--) if (it[i][4] !== "E"){ k = i; break; }
+      for (i = it.length-1; i >= 0; i--) if (it[i][4] !== "E" && !it[i][6]){ k = i; break; }
       if (k >= 0){
         const rem = it[k][5];
         it.splice(k,1);
@@ -942,7 +1048,7 @@ function ajustarTempo(it, lim, dur){
       }
     }
     alvo = -1;
-    for (i = it.length-1; i >= 0; i--) if (it[i][1] > 2){ alvo = i; break; }
+    for (i = it.length-1; i >= 0; i--) if (it[i][1] > 2 && !it[i][6]){ alvo = i; break; }
     if (alvo >= 0){ it[alvo][1] -= 1; continue; }
     break;
   }
@@ -951,7 +1057,7 @@ function ajustarTempo(it, lim, dur){
 
 function gerarPrograma(pf){
   const nivel = NIVN[pf.nivel] || 2;
-  const eq    = (pf.eq && pf.eq.length) ? pf.eq : EQ_TUDO;
+  const eq    = expandirEq((pf.eq && pf.eq.length) ? pf.eq : EQ_TUDO);
   const leve  = (pf.halMax || 40) < 16;
   const prot  = PROT[pf.objetivo] || PROT.recomp;
   const cnt   = {};
@@ -984,6 +1090,17 @@ function gerarPrograma(pf){
       return [id, sr, reps, p.d, papel, ""];
     });
 
+    /* cardio de aparelho não tem carga nem série: vira bloco progressivo de tempo */
+    it.forEach(x => {
+      if (!EX[x[0]].car) return;
+      const bl = (CARDIO_BLOCOS[pf.dur] || CARDIO_BLOCOS.medio).map(b => b.slice());
+      let tot = 0; bl.forEach(b => { tot += b[0]; });
+      x[1] = bl.length;
+      x[2] = Math.round(tot/60) + " min";
+      x[3] = "0s";
+      x[6] = bl;
+    });
+
     if (BISET[pf.objetivo] || pf.dur === "curto"){
       let letra = 65, ant = -1;
       for (let i = 1; i < it.length; i++){
@@ -998,6 +1115,35 @@ function gerarPrograma(pf){
   });
 
   return {v:2, criado:Date.now(), perfil:JSON.parse(JSON.stringify(pf)), dias:dias};
+}
+
+/* ============================ FRASES ============================ */
+/* citações reais, atribuídas a quem de fato as disse */
+const FRASES = [
+[{t:"Comece devagar, só para pegar o hábito.", a:"Arnold Schwarzenegger"},
+ {t:"Sofra agora e viva o resto da vida como campeão.", a:"Muhammad Ali"},
+ {t:"Disciplina é liberdade.", a:"Jocko Willink"}],
+[{t:"A força não vem de vencer: são as dificuldades que constroem a sua.", a:"Arnold Schwarzenegger"},
+ {t:"O único lugar onde sucesso vem antes de trabalho é no dicionário.", a:"Vince Lombardi"},
+ {t:"Falhei vezes sem conta na vida. É por isso que eu venço.", a:"Michael Jordan"}],
+[{t:"A mente é o limite.", a:"Arnold Schwarzenegger"},
+ {t:"Todo mundo quer ser bodybuilder, mas ninguém quer levantar peso pesado.", a:"Ronnie Coleman"},
+ {t:"Somos o que fazemos repetidamente; a excelência é hábito.", a:"Will Durant, sobre Aristóteles"}],
+[{t:"As últimas três ou quatro repetições fazem o músculo crescer.", a:"Arnold Schwarzenegger"},
+ {t:"Temo quem treinou um chute dez mil vezes.", a:"Bruce Lee"},
+ {t:"Sucesso não é acidente: é trabalho duro, persistência e amor pelo que se faz.", a:"Pelé"}],
+[{t:"Campeões não são feitos na academia: eles se fazem do que têm dentro.", a:"Muhammad Ali"},
+ {t:"Quanto mais eu treino, mais sorte eu tenho.", a:"Gary Player"},
+ {t:"Se você tem um corpo, você é um atleta.", a:"Bill Bowerman"}]
+];
+function escolherFrase(faixa){
+  const pool = FRASES[faixa], chave = "q" + faixa;
+  let usadas = D.usadas[chave] || [];
+  if (usadas.length >= pool.length) usadas = [];
+  const livres = pool.map((_,i) => i).filter(i => usadas.indexOf(i) < 0);
+  const i = livres[Math.floor(Math.random()*livres.length)];
+  usadas.push(i); D.usadas[chave] = usadas;
+  return pool[i];
 }
 
 /* ============================ MENSAGENS ============================ */
@@ -1043,7 +1189,7 @@ const DB = (function(){
     catch(e){ modo = "mem"; }
   }
   const vazio = () => ({perfil:null, programa:null, semana:null, historico:[], rascunhos:{},
-                        inicios:{}, usadas:{}, ultima:null, ultimoDia:0,
+                        inicios:{}, cron:{}, usadas:{}, ultima:null, ultimoDia:0,
                         locais:null, local:null, localDia:null});
   async function bruto(k){
     try {
@@ -1086,9 +1232,9 @@ const DB = (function(){
 
 /* ============================ LOCAIS DE TREINO ============================ */
 const LOCAIS_PADRAO = [
-  {id:"predio",   nome:"Academia do prédio",
-   eq:["hal","bar","ban","rck","pol","smq","voa","ext","flx","crd"], halMax:12},
-  {id:"completa", nome:"Academia completa",
+  {id:"predio",   nome:"Academia do prédio", v:2,
+   eq:["hal","bar","ban","bni","rck","pol","smq","voa","ext","flx","crd"], halMax:12},
+  {id:"completa", nome:"Academia completa", v:2,
    eq:EQ_TUDO.slice(), halMax:40}
 ];
 
@@ -1178,6 +1324,8 @@ function listaLocais(){
       if (EQ_MIGRA[v]) EQ_MIGRA[v].forEach(x => { if (l.eq.indexOf(x) < 0) fora.push(x); });
     });
     l.eq = (l.eq || []).filter(v => EQ_TUDO.indexOf(v) >= 0).concat(fora);
+    /* antes o banco era um item só e já permitia inclinado — converte uma única vez */
+    if (!l.v){ if (l.eq.indexOf("ban") >= 0 && l.eq.indexOf("bni") < 0) l.eq.push("bni"); l.v = 2; }
     if (!l.halMax) l.halMax = 40;
   });
   return D.locais;
@@ -1215,6 +1363,9 @@ function mostrar(v){
   $("#v-"+v).classList.add("on");
   $("#back").style.display = (v === "home" || v === "cal" || v === "hist" || v === "perfil") ? "none" : "flex";
   $("#pbar").style.display = (v === "treino") ? "block" : "none";
+  const emTreino = (v === "treino");
+  $("#crono").classList.toggle("on", emTreino);
+  if (emTreino){ pintarCrono(); ligarCrono(); } else desligarCrono();
   const semTabs = !!SEMTABS[v];
   $("#tabs").classList.toggle("on", !semTabs);
   $("#wrap").classList.toggle("nobar", semTabs);
@@ -1361,7 +1512,7 @@ async function confirmarSemana(){
   const meta = metaEscolhida || D.perfil.freq;
   D.semana = {chave:chaveSemana(Date.now()), meta:meta, criada:Date.now()};
   cacheProg = null;
-  if (assinatura(programaAtual()) !== antes){ D.rascunhos = {}; D.inicios = {}; D.ultimoDia = 0; }
+  if (assinatura(programaAtual()) !== antes){ D.rascunhos = {}; D.inicios = {}; D.cron = {}; D.ultimoDia = 0; }
   await DB.gravar();
   irAba("home");
 }
@@ -1466,6 +1617,156 @@ function ultimaCarga(exId){
   return null;
 }
 
+/* ============================ CRONOMETRO ============================ */
+const IC_CRONO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="13.6" r="7.5"/><path d="M12 13.6V9.8M9.5 2.7h5M18.6 7.6l1.3-1.3"/></svg>';
+let cronTimer = null, avisado = false, ctxAudio = null;
+
+function cronDe(i){
+  const k = chaveRasc(i == null ? diaAtivo : i);
+  if (!D.cron) D.cron = {};
+  if (!D.cron[k]) D.cron[k] = {ini:D.inicios[k] || Date.now(), pausaAcum:0, pausaEm:null,
+                               dIni:null, dK:null, dJ:null, dPausa:0, dTipo:"desc"};
+  return D.cron[k];
+}
+function pausaTotal(c, now){ return c.pausaAcum + (c.pausaEm ? now - c.pausaEm : 0); }
+function segTreino(c, now){ return Math.max(0, Math.floor((now - c.ini - pausaTotal(c, now))/1000)); }
+function segDesc(c, now){
+  if (c.dIni == null) return null;
+  return Math.max(0, Math.floor((now - c.dIni - (pausaTotal(c, now) - c.dPausa))/1000));
+}
+function mmss(s){ s = Math.max(0, Math.round(s)); const m = Math.floor(s/60), r = s%60;
+  return (m<10?"0":"") + m + ":" + (r<10?"0":"") + r; }
+function hmmss(s){ s = Math.max(0, Math.round(s)); const h = Math.floor(s/3600);
+  return h ? h + ":" + mmss(s%3600) : mmss(s); }
+function metaDesc(k){
+  try { return parseInt(programaAtual().dias[diaAtivo].it[k][3], 10) || 0; } catch(e){ return 60; }
+}
+/* exercícios por tempo: prancha, esteira, bike, caminhada do fazendeiro */
+function porTempo(k){
+  try { return EX[programaAtual().dias[diaAtivo].it[k][0]].u === "seg"; } catch(e){ return false; }
+}
+function metaTrab(k, j){
+  try {
+    const it = programaAtual().dias[diaAtivo].it[k];
+    if (it[6] && it[6][j]) return it[6][j][0];
+    return parseInt(it[2], 10) || 45;
+  } catch(e){ return 45; }
+}
+function ehCardio(k){
+  try { return !!EX[programaAtual().dias[diaAtivo].it[k][0]].car; } catch(e){ return false; }
+}
+function bip(n){
+  try {
+    if (!ctxAudio) ctxAudio = new (window.AudioContext || window.webkitAudioContext)();
+    if (ctxAudio.state === "suspended") ctxAudio.resume();
+    for (let i = 0; i < (n || 1); i++){
+      const o = ctxAudio.createOscillator(), g = ctxAudio.createGain(), t = ctxAudio.currentTime + i*0.23;
+      o.type = "sine"; o.frequency.value = 880;
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(0.2, t + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.18);
+      o.connect(g); g.connect(ctxAudio.destination); o.start(t); o.stop(t + 0.21);
+    }
+  } catch(e){}
+  try { if (navigator.vibrate) navigator.vibrate(n > 1 ? [130,80,130] : 45); } catch(e){}
+}
+function pararDesc(registrar){
+  const c = cronDe();
+  if (c.dIni == null) return null;
+  const s = segDesc(c, Date.now()), tipo = c.dTipo, k = c.dK, j = c.dJ;
+  const alvo = (k != null && dadosSessao[k]) ? dadosSessao[k][j] : null;
+  if (registrar && alvo){
+    if (tipo === "trab"){
+      alvo.rp = ehCardio(k) ? String(Math.round(s/6)/10) : String(s);
+      const inp = document.querySelector('#exs input[data-k="'+k+'"][data-j="'+j+'"][data-c="rp"]');
+      if (inp) inp.value = alvo.rp;
+      atualizarContadores();
+    } else alvo.ds = s;
+  }
+  c.dIni = null; c.dK = null; c.dJ = null; c.dTipo = "desc";
+  DB.gravar(); salvarRascunho();
+  if (k != null) pintarBotao(k, j);
+  return {tipo:tipo, k:k, j:j, s:s};
+}
+function iniciar(k, j, tipo){
+  const c = cronDe(), now = Date.now();
+  if (c.dIni != null) pararDesc(true);
+  if (c.pausaEm){ c.pausaAcum += now - c.pausaEm; c.pausaEm = null; }
+  c.dIni = now; c.dK = k; c.dJ = j; c.dTipo = tipo; c.dPausa = pausaTotal(c, now);
+  avisado = false;
+  bip(1);
+  DB.gravar();
+}
+/* um botão, três fases: trabalho (só nos exercícios por tempo) → descanso → registrado */
+function tocarBotao(k, j){
+  const c = cronDe();
+  const rodando = c.dIni != null && c.dK === k && c.dJ === j;
+  if (rodando){
+    const r = pararDesc(true);
+    if (r && r.tipo === "trab" && metaDesc(k) > 0) iniciar(k, j, "desc");
+    return;
+  }
+  iniciar(k, j, porTempo(k) ? "trab" : "desc");
+}
+function alternarPausa(){
+  const c = cronDe(), now = Date.now();
+  if (c.pausaEm){ c.pausaAcum += now - c.pausaEm; c.pausaEm = null; }
+  else c.pausaEm = now;
+  DB.gravar(); pintarCrono();
+}
+function pintarBotao(k, j){
+  const b = document.querySelector('.dbtn[data-d="' + k + '-' + j + '"]');
+  if (!b || !dadosSessao || !dadosSessao[k]) return;
+  const c = cronDe(), rodando = c.dIni != null && c.dK === k && c.dJ === j;
+  const ds = (dadosSessao[k][j] || {}).ds || 0;
+  const trab = rodando && c.dTipo === "trab";
+  b.classList.toggle("on", rodando && !trab);
+  b.classList.toggle("trab", trab);
+  b.classList.toggle("done", !rodando && ds > 0);
+  if (rodando) b.textContent = mmss(segDesc(c, Date.now()));
+  else if (ds > 0) b.textContent = mmss(ds);
+  else b.innerHTML = IC_CRONO;
+  b.setAttribute("aria-label", trab ? "Encerrar o tempo de execução"
+    : rodando ? "Encerrar o descanso desta série"
+    : ds > 0 ? "Descanso de " + ds + " segundos registrado, tocar para cronometrar de novo"
+    : porTempo(k) ? (ehCardio(k) ? "Iniciar o bloco " : "Iniciar o tempo da série ") + (j+1)
+                  : "Série " + (j+1) + " feita, iniciar o descanso");
+}
+function pintarBotoes(){
+  if (!dadosSessao) return;
+  dadosSessao.forEach((sets, k) => sets.forEach((_, j) => pintarBotao(k, j)));
+}
+function pintarCrono(){
+  const el = $("#crono");
+  if (!el || !el.classList.contains("on") || diaAtivo == null || !dadosSessao) return;
+  const c = cronDe(), now = Date.now();
+  $("#c-tot-v").textContent = hmmss(segTreino(c, now));
+  $("#c-tot").classList.toggle("pau", !!c.pausaEm);
+  $("#c-tot-l").textContent = c.pausaEm ? "Treino · pausado" : "Treino";
+  $("#c-tot-x").textContent = c.pausaEm ? "retomar" : "pausar";
+
+  const box = $("#c-dsc"), s = segDesc(c, now);
+  box.classList.remove("run","ok","over");
+  if (s == null){
+    $("#c-dsc-v").textContent = "--:--";
+    $("#c-dsc-l").textContent = "Descanso";
+    $("#c-dsc-x").textContent = "";
+  } else {
+    const trab = c.dTipo === "trab";
+    const meta = trab ? metaTrab(c.dK, c.dJ) : metaDesc(c.dK);
+    $("#c-dsc-v").textContent = mmss(s);
+    $("#c-dsc-l").textContent = (trab ? (ehCardio(c.dK) ? "Bloco" : "Execução") : "Descanso")
+      + (meta ? " · meta " + (meta >= 120 ? Math.round(meta/60) + " min" : meta + "s") : "");
+    $("#c-dsc-x").textContent = trab ? "encerrar" : "pronto";
+    if (trab) box.classList.add(s < meta ? "trab" : "ok");
+    else box.classList.add(!meta ? "ok" : s < meta ? "run" : (s < meta + 30 ? "ok" : "over"));
+    if (meta && s >= meta && !avisado){ avisado = true; bip(2); }
+    pintarBotao(c.dK, c.dJ);
+  }
+}
+function ligarCrono(){ if (!cronTimer) cronTimer = setInterval(pintarCrono, 500); }
+function desligarCrono(){ if (cronTimer){ clearInterval(cronTimer); cronTimer = null; } }
+
 function abrirTreino(i, jaEscolhido){
   if (!jaEscolhido && listaLocais().length > 1 && D.localDia !== chaveDia(Date.now()))
     return pedirLocal(i);
@@ -1478,10 +1779,11 @@ function abrirTreino(i, jaEscolhido){
 
   dadosSessao = d.it.map((it,k) => {
     const base = Array.from({length: it[1]}, () => ({kg:"",rp:""}));
-    if (r && r[k] && r[k].length === base.length) return r[k].map(x => ({kg:x.kg||"", rp:x.rp||""}));
+    if (r && r[k] && r[k].length === base.length) return r[k].map(x => ({kg:x.kg||"", rp:x.rp||"", ds:x.ds||0}));
     return base;
   });
   if (!D.inicios[chaveRasc(i)]) { D.inicios[chaveRasc(i)] = Date.now(); DB.gravar(); }
+  cronDe(i);
 
   $("#ttl").textContent = d.cod;
   $("#stl").textContent = d.foco;
@@ -1489,9 +1791,11 @@ function abrirTreino(i, jaEscolhido){
   const nLocais = listaLocais().length;
   $("#exs").innerHTML =
    (nLocais > 1 ? `<button class="localchip" id="chg-local"><span>${esc(localAtual().nome)}</span><b>Trocar</b></button>` : "")
-   + (refs.some(r => r) ? '<div class="note" style="margin:0 0 14px">Os valores em cinza são os da última vez que você fez cada exercício. Iguale ou supere.</div>' : "")
+   + (refs.some(r => r) ? '<div class="note" style="margin:0 0 10px">Os valores em cinza são os da última vez que você fez cada exercício. Iguale ou supere.</div>' : "")
+   + '<div class="note" style="margin:0 0 14px">Ao terminar cada série, toque no ⏱ da linha. O descanso começa a contar e o app avisa quando bate a meta do exercício.</div>'
    + d.it.map((it,k) => {
     const e = EX[it[0]], seg = e.u === "seg", par = it[5];
+    const bls = it[6] || null, car = !!e.car;
     const primeiro = par && (!d.it[k-1] || d.it[k-1][5] !== par);
     return `<div class="ex${par ? " bs" : ""}">
       ${par ? `<div class="bsb">Série dupla ${par}${primeiro ? " · alterne com o próximo, sem descanso" : ""}</div>` : ""}
@@ -1499,7 +1803,8 @@ function abrirTreino(i, jaEscolhido){
         <span class="dot" style="background:${CORZ[e.z]}"></span>
         <span style="flex:1;min-width:0">
           <span class="nm">${esc(e.n)}</span>
-          <span class="rx">${it[1]} × ${esc(it[2])}${e.l?" por lado":""} · descanso ${esc(it[3])}</span>
+          <span class="rx">${bls ? esc(it[2]) + " em " + it[1] + " blocos · sem parar"
+                                  : it[1] + " × " + esc(it[2]) + (e.l?" por lado":"") + " · descanso " + esc(it[3])}</span>
         </span>
         <span class="ct" id="ct${k}">0/${it[1]}</span>
       </button>
@@ -1508,20 +1813,23 @@ function abrirTreino(i, jaEscolhido){
         <ul>${e.e.map(x => "<li>"+esc(x)+"</li>").join("")}</ul>
       </div>
       <div class="sets">
-        ${dadosSessao[k].map((_,j) => `
+        ${dadosSessao[k].map((_,j) => {
+        const b = bls && bls[j], min = b ? Math.round(b[0]/60) : 0;
+        return `
+        ${b ? `<div class="blk"><b>${j+1} · ${esc(b[2])}</b><span>${min} min em ritmo ${esc(b[1])} — ${esc(RITMO[b[1]]||"")}</span></div>` : ""}
         <div class="srow">
           <span class="sl">${j+1}</span>
           <label class="fld"><input type="text" inputmode="decimal" enterkeyhint="next"
             autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-            aria-label="Carga da série ${j+1} de ${esc(e.n)}" data-k="${k}" data-j="${j}" data-c="kg"
-            placeholder="${esc(ref(k,j,"kg") || (e.pc?"extra":"carga"))}"><span>kg</span></label>
-          <label class="fld"><input type="text" inputmode="numeric" enterkeyhint="next"
+            aria-label="${car ? "Velocidade do bloco " : "Carga da série "}${j+1} de ${esc(e.n)}" data-k="${k}" data-j="${j}" data-c="kg"
+            placeholder="${esc(ref(k,j,"kg") || (car?"ritmo":e.pc?"extra":"carga"))}"><span>${car?esc(e.cu||"nível"):"kg"}</span></label>
+          <label class="fld"><input type="text" inputmode="decimal" enterkeyhint="next"
             autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-            aria-label="Repetições da série ${j+1} de ${esc(e.n)}" data-k="${k}" data-j="${j}" data-c="rp"
-            placeholder="${esc(ref(k,j,"rp") || (seg?"tempo":"reps"))}"><span>${seg?"s":"reps"}</span></label>
-          ${j===0 && it[1]>1 ? `<button class="copy" data-cp="${k}" title="repetir nas demais séries">↓</button>`
-                             : `<span style="width:38px;flex:0 0 auto"></span>`}
-        </div>`).join("")}
+            aria-label="${car ? "Minutos do bloco " : seg ? "Tempo da série " : "Repetições da série "}${j+1} de ${esc(e.n)}" data-k="${k}" data-j="${j}" data-c="rp"
+            placeholder="${esc(ref(k,j,"rp") || (car ? String(min) : seg ? "tempo" : "reps"))}"><span>${car?"min":seg?"s":"reps"}</span></label>
+          <button class="dbtn" data-d="${k}-${j}" data-k="${k}" data-j="${j}"></button>
+        </div>`; }).join("")}
+        ${it[1] > 1 ? `<button class="copyln" data-cp="${k}">↓ repetir a carga da 1ª série nas demais</button>` : ""}
       </div>
     </div>`;
   }).join("");
@@ -1548,7 +1856,17 @@ function abrirTreino(i, jaEscolhido){
   if (bl) bl.onclick = () => pedirLocal(diaAtivo);
   document.querySelectorAll(".ex-h").forEach(b =>
     b.onclick = () => $("#dt"+b.dataset.t).classList.toggle("on"));
-  document.querySelectorAll(".copy").forEach(b => b.onclick = () => {
+  document.querySelectorAll(".dbtn").forEach(b => b.onclick = () => {
+    tocarBotao(parseInt(b.dataset.k,10), parseInt(b.dataset.j,10));
+    pintarBotoes(); pintarCrono();
+  });
+  $("#c-tot").onclick = alternarPausa;
+  $("#c-dsc").onclick = () => {
+    const c = cronDe();
+    if (c.dIni != null) pararDesc(true);
+    pintarBotoes(); pintarCrono();
+  };
+  document.querySelectorAll(".copyln").forEach(b => b.onclick = () => {
     const k = parseInt(b.dataset.cp,10), src = dadosSessao[k][0];
     dadosSessao[k].forEach((s,j) => { if (j>0){ s.kg = src.kg; s.rp = src.rp; } });
     document.querySelectorAll(`#exs input[data-k="${k}"]`).forEach(inp => {
@@ -1558,6 +1876,7 @@ function abrirTreino(i, jaEscolhido){
   });
 
   atualizarContadores();
+  pintarBotoes();
   mostrar("treino");
 }
 
@@ -1590,7 +1909,7 @@ function calcular(){
     const e = EX[d.it[k][0]];
     prescritas += sets.length;
     feitas += sets.filter(s => parseFloat(s.rp) > 0).length;
-    if (!e.pc){
+    if (!e.pc && !e.car){
       comCargaTotal++;
       if (sets.some(s => parseFloat(s.kg) > 0)) comCarga++;
       sets.forEach(s => {
@@ -1610,13 +1929,23 @@ function calcular(){
 
   let nota = Math.round((0.82*comp + 0.08*reg + 0.10*prog) * 10);
   if (feitas === 0) nota = 0; else nota = Math.max(1, Math.min(10, nota));
-  const ini = D.inicios[chaveRasc(diaAtivo)];
-  const dur = ini ? Math.max(1, Math.round((Date.now() - ini)/60000)) : 0;
-  return {nota, comp, reg, prog, progTxt, feitas, prescritas, volume, comCarga, comCargaTotal, dur, ant};
+  const c = cronDe(), agora = Date.now();
+  const durSeg = segTreino(c, agora);
+  const dur = durSeg ? Math.max(1, Math.round(durSeg/60)) : 0;
+  let descTotal = 0, nDesc = 0, metaTotal = 0;
+  dadosSessao.forEach((sets, k) => sets.forEach(x => {
+    const v = parseInt(x.ds, 10) || 0;
+    if (v > 0){ descTotal += v; nDesc++; metaTotal += metaDesc(k); }
+  }));
+  const descMedia = nDesc ? Math.round(descTotal/nDesc) : 0;
+  const metaMedia = nDesc ? Math.round(metaTotal/nDesc) : 0;
+  return {nota, comp, reg, prog, progTxt, feitas, prescritas, volume, comCarga, comCargaTotal,
+          dur, durSeg, descTotal, descMedia, metaMedia, nDesc, ant};
 }
 
+function faixaNota(nota){ return nota <= 3 ? 0 : nota <= 5 ? 1 : nota <= 7 ? 2 : nota <= 9 ? 3 : 4; }
 function escolherMensagem(nota){
-  const faixa = nota <= 3 ? 0 : nota <= 5 ? 1 : nota <= 7 ? 2 : nota <= 9 ? 3 : 4;
+  const faixa = faixaNota(nota);
   const pool = MSG[faixa], chave = "f" + faixa;
   let usadas = D.usadas[chave] || [];
   if (usadas.length >= pool.length) usadas = [];
@@ -1654,6 +1983,8 @@ function renderResultado(r){
   $("#rnota").style.color = cor;
   $("#rmsg").textContent = msg;
   $("#rmsg").style.borderLeftColor = cor;
+  const fr = escolherFrase(faixaNota(r.nota));
+  $("#rfrase").innerHTML = `<p>“${esc(fr.t)}”</p><span>${esc(fr.a)}</span>`;
   const linha = (t,v,sub,c) => `<div class="brkrow">
     <div class="t"><b>${t}</b><span>${sub}</span></div>
     <div class="mini"><i style="width:${Math.round(v*100)}%;background:${c}"></i></div></div>`;
@@ -1663,7 +1994,10 @@ function renderResultado(r){
     linha("Progressão de volume", r.prog, r.progTxt, "var(--z3)") +
     `<div class="brkrow" style="border-top:1px solid var(--line);padding-top:12px">
       <div class="t"><b>Volume total</b><span>${num(r.volume)} kg</span></div></div>` +
-    (r.dur ? `<div class="brkrow"><div class="t"><b>Duração</b><span>${r.dur} min</span></div></div>` : "");
+    (r.durSeg ? `<div class="brkrow"><div class="t"><b>Tempo total</b><span>${hmmss(r.durSeg)}</span></div></div>` : "") +
+    (r.nDesc ? `<div class="brkrow"><div class="t"><b>Tempo em descanso</b><span>${hmmss(r.descTotal)} somados em ${r.nDesc} série${r.nDesc>1?"s":""} · ${Math.round(r.descTotal/r.durSeg*100)}% da sessão</span></div></div>`
+      + `<div class="brkrow"><div class="t"><b>Descanso médio</b><span>${mmss(r.descMedia)} por série · meta ${mmss(r.metaMedia)}${r.descMedia > r.metaMedia*1.3 ? " · você está descansando demais" : r.descMedia < r.metaMedia*0.7 ? " · você está descansando de menos" : " · dentro do previsto"}</span></div></div>`
+      : `<div class="brkrow"><div class="t"><b>Descanso</b><span>nenhuma série cronometrada — toque no ⏱ de cada linha na próxima vez</span></div></div>`);
   $("#rpasso").innerHTML = proximoPasso(r);
   mostrar("res");
 }
@@ -1695,7 +2029,7 @@ function pedirLocal(i){
 function abrirEqp(id){
   const ls = listaLocais();
   localEditando = id ? JSON.parse(JSON.stringify(ls.filter(l => l.id === id)[0])) : null;
-  if (!localEditando) localEditando = {id:"l" + Date.now(), nome:"", eq:["hal"], halMax:40, novo:1};
+  if (!localEditando) localEditando = {id:"l" + Date.now(), nome:"", eq:["hal"], halMax:40, v:2, novo:1};
   if (!localEditando.halMax) localEditando.halMax = 40;
   $("#ttl").textContent = localEditando.novo ? "Novo lugar" : "Equipamento";
   $("#stl").textContent = "o que existe para treinar";
@@ -1712,9 +2046,14 @@ function renderEqp(){
     const itens = EQP.filter(e => e.g === g);
     if (!itens.length) return "";
     return `<div class="eqg">${esc(g)}</div><div class="opts">` + itens.map(e =>
-      `<button class="opt${eq.indexOf(e.v) >= 0 ? " sel" : ""}" data-e="${e.v}">
-         <div class="t">${esc(e.t)}</div>
-         <div class="s">${eq.indexOf(e.v) >= 0 ? "tem" : "não tem"}</div>
+      `<button class="opt wide${eq.indexOf(e.v) >= 0 ? " sel" : ""}" data-e="${e.v}">
+         <div class="eqrow">
+           ${artEq(e.v)}
+           <div class="eqtx">
+             <div class="t">${esc(e.t)}<span class="eqtag">${eq.indexOf(e.v) >= 0 ? "tem" : "não tem"}</span></div>
+             <div class="s">${esc(e.d)}</div>
+           </div>
+         </div>
        </button>`).join("") + "</div>";
   }).join("");
   $("#eq-lista").querySelectorAll(".opt").forEach(b => b.onclick = () => {
@@ -1759,7 +2098,7 @@ $("#eq-ok").onclick = async () => {
   localEditando.nome = nome;
   const ls = listaLocais(), i = ls.map(l => l.id).indexOf(localEditando.id);
   const limpo = {id:localEditando.id, nome:localEditando.nome, eq:localEditando.eq,
-                 halMax:localEditando.halMax || 40};
+                 halMax:localEditando.halMax || 40, v:2};
   if (i >= 0) ls[i] = limpo; else ls.push(limpo);
   if (!D.local) D.local = limpo.id;
   cacheProg = null;
@@ -1821,15 +2160,18 @@ function blocoFicha(s){
     const e = EX[x[0]]; if (!e) return "";
     const seg = e.u === "seg", sets = (s.sets && s.sets[k]) || [];
     const chips = sets.map((v,j) => {
-      const kg = parseFloat(v.kg)||0, rp = parseFloat(v.rp)||0;
+      const kg = parseFloat(v.kg)||0, rp = parseFloat(v.rp)||0, ds = parseInt(v.ds,10)||0;
+      const td = ds > 0 ? `<i>⏱ ${mmss(ds)}</i>` : "";
       if (!kg && !rp) return `<span class="fchip zero">${j+1}ª —</span>`;
-      if (seg) return `<span class="fchip"><b>${rp||"—"}</b> s${kg?" · "+num(kg)+" kg":""}</span>`;
-      if (kg)  return `<span class="fchip"><b>${num(kg)}</b> kg × ${rp||"—"}</span>`;
-      return `<span class="fchip"><b>${rp}</b> reps</span>`;
+      if (e.car) return `<span class="fchip"><b>${rp||"—"}</b> min${kg?" · "+kg+" "+esc(e.cu||""):""}</span>`;
+      if (seg) return `<span class="fchip"><b>${rp||"—"}</b> s${kg?" · "+num(kg)+" kg":""}${td}</span>`;
+      if (kg)  return `<span class="fchip"><b>${num(kg)}</b> kg × ${rp||"—"}${td}</span>`;
+      return `<span class="fchip"><b>${rp}</b> reps${td}</span>`;
     }).join("");
     return `<div class="fex">
       <div class="fn"><span class="dot" style="background:${CORZ[e.z]};margin-top:6px"></span>${esc(e.n)}</div>
-      <div class="fr">${x[1]} × ${esc(x[2])}${e.l?" por lado":""} · descanso ${esc(x[3])}${x[5]?" · série dupla "+x[5]:""}</div>
+      <div class="fr">${x[6] ? esc(x[2]) + " em " + x[1] + " blocos · sem parar"
+        : x[1] + " × " + esc(x[2]) + (e.l?" por lado":"") + " · descanso " + esc(x[3]) + (x[5]?" · série dupla "+x[5]:"")}</div>
       <div class="fset">${chips || '<span class="fchip zero">sem registro</span>'}</div>
     </div>`;
   }).join("") : `<div class="empty">Esta sessão foi registrada em um ciclo anterior e não guarda o detalhe dos exercícios.</div>`;
@@ -1842,7 +2184,8 @@ function blocoFicha(s){
         <div>Nota<b style="color:${corNota(s.nota)}">${s.nota}</b></div>
         <div>Séries<b>${s.feitas}/${s.prescritas}</b></div>
         <div>Volume<b>${num(s.volume||0)} kg</b></div>
-        ${s.dur ? `<div>Duração<b>${s.dur} min</b></div>` : ""}
+        ${s.durSeg ? `<div>Duração<b>${hmmss(s.durSeg)}</b></div>` : s.dur ? `<div>Duração<b>${s.dur} min</b></div>` : ""}
+        ${s.nDesc ? `<div>Descanso médio<b>${mmss(s.descMedia)}</b></div>` : ""}
       </div>
     </div>${corpo}`;
 }
@@ -1984,12 +2327,13 @@ $("#gerar").onclick = async () => {
   cacheProg = null;
   D.programa = gerarPrograma(Object.assign({}, form, {eq:localAtual().eq}));
   D.semana = null;
-  D.rascunhos = {}; D.inicios = {}; D.ultimoDia = 0;
+  D.rascunhos = {}; D.inicios = {}; D.cron = {}; D.ultimoDia = 0;
   await DB.gravar();
   renderSemana(false);
 };
 
 $("#fim").onclick = () => {
+  pararDesc(true);
   const r = calcular();
   if (!r.feitas){
     const a = $("#aviso");
@@ -2005,10 +2349,12 @@ $("#fim").onclick = () => {
 $("#rok").onclick = async () => {
   const r = ultimoResultado, d = programaAtual().dias[diaAtivo];
   D.historico.push({ts:Date.now(), cod:d.cod, foco:d.foco, tipo:d.tipo, nota:r.nota,
-    feitas:r.feitas, prescritas:r.prescritas, volume:r.volume, dur:r.dur,
+    feitas:r.feitas, prescritas:r.prescritas, volume:r.volume, dur:r.dur, durSeg:r.durSeg,
+    descTotal:r.descTotal, descMedia:r.descMedia, metaMedia:r.metaMedia, nDesc:r.nDesc,
     sets:dadosSessao, it:JSON.parse(JSON.stringify(d.it))});
   delete D.rascunhos[chaveRasc(diaAtivo)];
   delete D.inicios[chaveRasc(diaAtivo)];
+  if (D.cron) delete D.cron[chaveRasc(diaAtivo)];
   D.ultimoDia = diaAtivo + 1;
   await DB.gravar();
   calRef = new Date();
