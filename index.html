@@ -304,14 +304,14 @@ html:not(.js) .top,html:not(.js) .wrap,html:not(.js) .tabs{display:none!importan
 .fetab.sel{background:var(--acc);color:var(--inv);border-color:var(--acc)}
 .fetab.sel span{background:rgba(127,127,127,.28);color:var(--inv)}
 .fetab.add{font-family:var(--body);font-size:13px;text-transform:none;letter-spacing:0}
-.fc{background:var(--surf);border:1px solid var(--line);border-radius:13px;margin-bottom:9px;
+.fcd{background:var(--surf);border:1px solid var(--line);border-radius:13px;margin-bottom:9px;
   box-shadow:var(--sh);overflow:hidden}
-.fc.ab{border-color:var(--line2)}
-.fc.arr{opacity:.85;box-shadow:var(--sh2);position:relative;z-index:6}
-.fc .fcr{display:flex;align-items:center;gap:2px;padding-right:6px}
+.fcd.ab{border-color:var(--line2)}
+.fcd.arr{opacity:.85;box-shadow:var(--sh2);position:relative;z-index:6}
+.fcd .fcr{display:flex;align-items:center;gap:2px;padding-right:6px}
 .fh{width:38px;min-height:56px;display:flex;align-items:center;justify-content:center;
   color:var(--mut2);font-size:17px;cursor:grab;touch-action:none;flex:0 0 auto}
-.fc .dot{flex:0 0 auto;margin-right:8px}
+.fcd .dot{flex:0 0 auto;margin-right:8px}
 .fct{flex:1;min-width:0;text-align:left;padding:11px 0;min-height:56px}
 .fcn{display:block;font-weight:600;font-size:14.5px;line-height:1.25}
 .fcs{display:block;font-size:12.5px;color:var(--mut);margin-top:3px}
@@ -346,6 +346,9 @@ html:not(.js) .top,html:not(.js) .wrap,html:not(.js) .tabs{display:none!importan
 .volchip b{color:var(--tx);font-family:var(--cond);font-size:14px;margin-left:6px}
 .btn[disabled]{opacity:.5}
 .fetabs{position:sticky;z-index:5;background:var(--bg);padding:9px 0 8px;margin-top:-9px}
+.pkbar{margin-bottom:14px}
+.pkbar .txt{margin-bottom:9px}
+.pkinfo{font-size:12px;color:var(--mut2);margin-top:9px;letter-spacing:.03em}
 .pki{display:flex;align-items:center;gap:4px;width:100%;background:var(--surf);border:1px solid var(--line);
   border-radius:12px;padding:0 12px 0 0;color:var(--tx)}
 .pki.arr{opacity:.5}
@@ -354,7 +357,7 @@ html:not(.js) .top,html:not(.js) .wrap,html:not(.js) .tabs{display:none!importan
 .pkb{flex:1;min-width:0;display:flex;align-items:center;gap:9px;min-height:50px;padding:8px 0;
   text-align:left;font-size:14px;color:var(--tx)}
 .pkb:active{opacity:.7}
-.ghost{position:fixed;left:0;top:0;z-index:99;pointer-events:none;margin:-21px 0 0 -66px;
+.dragrot{position:fixed;left:0;top:0;z-index:99;pointer-events:none;margin:-21px 0 0 -66px;
   background:var(--acc);color:var(--inv);padding:9px 14px;border-radius:11px;font-size:13px;font-weight:700;
   box-shadow:var(--sh2);max-width:66vw;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
 body.arrastando{user-select:none;-webkit-user-select:none}
@@ -381,8 +384,8 @@ body.arrastando{user-select:none;-webkit-user-select:none}
   .pr th{text-align:left;font-size:7.5pt;text-transform:uppercase;letter-spacing:.08em;color:#444;
     border-bottom:.8pt solid #999;padding:3pt 4pt}
   .pr td{border-bottom:.5pt solid #ccc;padding:5pt 4pt;vertical-align:top}
-  .pr td.ex b{display:block;font-size:10pt;font-weight:700}
-  .pr td.ex i{display:block;font-size:7.5pt;color:#555;font-style:italic;margin-top:1pt}
+  .pr td.exn b{display:block;font-size:10pt;font-weight:700}
+  .pr td.exn i{display:block;font-size:7.5pt;color:#555;font-style:italic;margin-top:1pt}
   .pr th.s, .pr td.s{width:34pt;text-align:center;border-left:.5pt solid #ccc}
   .pr td.s{height:26pt}
   .pr td.s span{color:#bbb}
@@ -754,6 +757,8 @@ body.arrastando{user-select:none;-webkit-user-select:none}
   <!-- MINHA FICHA -->
   <div class="view" id="v-fedit">
     <p class="intro" id="fe-intro"></p>
+    <div class="qlbl">Montando a ficha de</div>
+    <div class="chips" id="fe-locais" style="margin-bottom:16px"></div>
     <div class="fetabs" id="fe-dias"></div>
     <div class="step">
       <div class="qlbl">Nome deste dia</div>
@@ -789,6 +794,11 @@ body.arrastando{user-select:none;-webkit-user-select:none}
     <div class="seclbl mt">Sua ficha</div>
     <div id="pficha"></div>
     <div class="note">A automática é remontada sempre que você muda perfil, semana ou lugar. A sua fica como você deixou, guardada por lugar de treino.</div>
+
+    <div class="seclbl mt">Imprimir a ficha</div>
+    <button class="btn ghost" id="pimp-dia">Imprimir o próximo treino</button>
+    <button class="btn ghost" id="pimp-sem">Imprimir a semana inteira</button>
+    <div class="note">Sai a ficha em uso, com uma coluna em branco por série para anotar carga e repetições à mão. Na janela de impressão dá para escolher salvar em PDF.</div>
 
     <div class="seclbl mt">Onde você treina</div>
     <div id="plocais"></div>
@@ -1077,6 +1087,7 @@ const FIN  = {emagrecer:1, definicao:1, recomp:1, saude:1, massa:0, forca:0};
 const BISET= {emagrecer:1, definicao:1, saude:1, recomp:1, massa:0, forca:0};
 const NIVN = {iniciante:1, intermediario:2, avancado:3};
 
+let varSeed = 0;
 function escolher(pad, nivel, usados, papel, cnt, vistos, eq, leve){
   const todos = POOL[pad] || [];
   let pool = todos.filter(id => temEq(id, eq));
@@ -1100,7 +1111,7 @@ function escolher(pad, nivel, usados, papel, cnt, vistos, eq, leve){
   const f = l.filter(id => (ISO.indexOf(id) >= 0) === prefIso);
   if (f.length) l = f;
   if (!vistos[pad]){ cnt[pad] = (cnt[pad] || 0) + 1; vistos[pad] = 1; }
-  return l[((cnt[pad] || 1) - 1) % l.length];
+  return l[((((cnt[pad] || 1) - 1) + varSeed) % l.length + l.length) % l.length];
 }
 
 function aplicarEnfase(b, enf, tipo){
@@ -1174,6 +1185,7 @@ function ajustarTempo(it, lim, dur){
 }
 
 function gerarPrograma(pf){
+  varSeed = pf.variacao || 0;
   const nivel = NIVN[pf.nivel] || 2;
   const eq    = expandirEq((pf.eq && pf.eq.length) ? pf.eq : EQ_TUDO);
   const leve  = (pf.halMax || 40) < 16;
@@ -1308,7 +1320,7 @@ const DB = (function(){
   }
   const vazio = () => ({perfil:null, programa:null, semana:null, historico:[], rascunhos:{},
                         inicios:{}, cron:{}, usadas:{}, ultima:null, ultimoDia:0,
-                        locais:null, local:null, localDia:null, fichas:{}, modo:"auto"});
+                        locais:null, local:null, localDia:null, fichas:{}, modo:"auto", variacao:0});
   async function bruto(k){
     try {
       if (modo === "ws"){ const r = await window.storage.get(k,false); return r ? r.value : null; }
@@ -1480,9 +1492,10 @@ function programaAtual(){
     cacheProg = {k:kc, p:pc};
     return pc;
   }
-  const k = loc.id + "|" + loc.eq.slice().sort().join(",") + "|" + (loc.halMax||40) + "|" + meta + "|" + assinaturaPerfil();
+  const k = loc.id + "|" + loc.eq.slice().sort().join(",") + "|" + (loc.halMax||40) + "|" + meta
+          + "|" + (D.variacao||0) + "|" + assinaturaPerfil();
   if (cacheProg && cacheProg.k === k) return cacheProg.p;
-  const pf = Object.assign({}, D.perfil, {freq:meta, eq:loc.eq, halMax:loc.halMax});
+  const pf = Object.assign({}, D.perfil, {freq:meta, eq:loc.eq, halMax:loc.halMax, variacao:D.variacao||0});
   const p = gerarPrograma(pf);
   cacheProg = {k:k, p:p};
   return p;
@@ -1502,13 +1515,13 @@ function htmlImpressao(dias){
       const cols = Math.max.apply(null, d.it.map(x => x[1]).concat([1]));
       return `<h2>${esc(d.cod)}<span>${esc(d.foco || "")} · cerca de ${d.min} min</span></h2>
       <table><thead><tr>
-        <th class="ex">Exercício</th><th class="pr2">Prescrição</th><th class="pr2">Descanso</th>` +
+        <th class="exn">Exercício</th><th class="pr2">Prescrição</th><th class="pr2">Descanso</th>` +
         Array.apply(null, {length:cols}).map((_,i) => `<th class="s">${i+1}ª</th>`).join("") +
       `</tr></thead><tbody>` + d.it.map(x => {
         const e = EX[x[0]]; if (!e) return "";
         const car = !!e.car;
         return `<tr>
-          <td class="ex"><b>${esc(e.n)}</b><i>${esc(e.c || "")}</i></td>
+          <td class="exn"><b>${esc(e.n)}</b><i>${esc(e.c || "")}</i></td>
           <td>${car ? esc(x[2]) + " em " + x[1] + " blocos" : x[1] + " × " + esc(x[2]) + (e.l ? " por lado" : "")}</td>
           <td>${car ? "sem parar" : esc(x[3])}</td>` +
           Array.apply(null, {length:cols}).map((_,i) =>
@@ -1558,7 +1571,8 @@ function itemNovo(id, papel){
 }
 /* confere a ficha contra o objetivo, o nível, o tempo e o equipamento do lugar */
 function auditarFicha(dias){
-  const pf = D.perfil || {}, loc = localAtual(), eq = expandirEq(loc.eq);
+  const pf = D.perfil || {}, loc = (typeof feLocal === "string" && feLocal) ? localFe() : localAtual();
+  const eq = expandirEq(loc.eq);
   const nivel = NIVN[pf.nivel] || 2, lim = LIM[pf.dur] || 62;
   const av = [], vol = {};
   dias.forEach(d => {
@@ -1593,23 +1607,59 @@ function auditarFicha(dias){
 }
 
 let feDias = null, feDia = 0, fePicker = false, feAberto = -1;
+let feLocal = null, feBusca = "", feAcima = false, feTroca = -1;
 
-function abrirFedit(){
-  if (temFichaPropria()) feDias = JSON.parse(JSON.stringify(fichaSalva().dias));
-  else feDias = programaAtual().dias.map(d => ({cod:d.cod, tipo:d.tipo, it:JSON.parse(JSON.stringify(d.it))}));
+function semAcento(t){
+  return (t || "").toLowerCase().normalize ? (t||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"") : (t||"").toLowerCase();
+}
+function localFe(){
+  const l = listaLocais();
+  return l.filter(x => x.id === feLocal)[0] || localAtual();
+}
+function fichaDoLugar(id){ return (D.fichas && D.fichas[id]) || null; }
+function baseDoLugar(loc){
+  const f = fichaDoLugar(loc.id);
+  if (f && f.dias && f.dias.length) return JSON.parse(JSON.stringify(f.dias));
+  const pr = gerarPrograma(Object.assign({}, D.perfil, {eq:loc.eq, halMax:loc.halMax, variacao:D.variacao||0}));
+  return pr.dias.map(d => ({cod:d.cod, tipo:d.tipo, it:JSON.parse(JSON.stringify(d.it))}));
+}
+function carregarFedit(){
+  feDias = baseDoLugar(localFe());
   feDias.forEach(d => repapelar(d.it));
-  feDia = 0; fePicker = false; feAberto = -1;
+  feDia = 0; feAberto = -1; feTroca = -1;
+}
+function abrirFedit(idLocal){
+  feLocal = idLocal || localAtual().id;
+  fePicker = false; feBusca = ""; feAcima = false;
+  carregarFedit();
   $("#ttl").textContent = "Minha ficha";
   $("#stl").textContent = "monte do seu jeito";
   renderFedit();
   mostrar("fedit");
 }
+/* quantos exercícios existem para este lugar e este nível */
+function contarDisponiveis(loc){
+  const eq = expandirEq((loc || (feLocal ? localFe() : localAtual())).eq);
+  const nivel = NIVN[(D.perfil||{}).nivel] || 2;
+  let tot = 0, teto = 0;
+  Object.keys(POOL).forEach(pad => (POOL[pad] || []).forEach(id => {
+    if (!temEq(id, eq)) return;
+    teto++;
+    if ((EX[id].nv || 1) <= nivel) tot++;
+  }));
+  return {nivel:tot, todos:teto};
+}
 function feDiaAtual(){ return feDias[feDia]; }
 function renderFedit(){
   const pf = D.perfil || {}, d = feDiaAtual();
-  $("#fe-intro").innerHTML = "Arraste pelo <b>⠿</b>: solte na lista para entrar numa posição, ou solte na aba de outro dia para mandar o exercício para lá. "
-    + "Toque no exercício para ajustar séries, repetições e descanso. Os números entram no padrão de <b>"
-    + esc((TXT_OBJ[pf.objetivo]||"").toLowerCase()) + "</b> — o quadro embaixo avisa quando a ficha sai do objetivo.";
+  const disp = contarDisponiveis();
+  $("#fe-intro").innerHTML = "Montando para <b>" + esc(localFe().nome) + "</b>, objetivo <b>"
+    + esc((TXT_OBJ[pf.objetivo]||"").toLowerCase()) + "</b>, nível <b>" + esc((TXT_NIV[pf.nivel]||"").toLowerCase())
+    + "</b>. São <b>" + disp.nivel + " exercícios</b> disponíveis neste lugar"
+    + (disp.todos > disp.nivel ? ", e mais " + (disp.todos - disp.nivel) + " acima do seu nível" : "")
+    + ". Arraste pelo <b>⠿</b>: solte na lista para entrar numa posição, ou na aba de outro dia para mandar para lá.";
+  $("#fe-locais").innerHTML = listaLocais().map(l =>
+    `<button class="chip${l.id === feLocal ? " sel" : ""}" data-fl="${esc(l.id)}">${esc(l.nome)}${fichaDoLugar(l.id) ? " ·" : ""}</button>`).join("");
   const alt = document.querySelector("header.top");
   if (alt) $("#fe-dias").style.top = alt.offsetHeight + "px";
   $("#fe-dias").innerHTML = feDias.map((x,i) =>
@@ -1621,7 +1671,7 @@ function renderFedit(){
     const e = EX[x[0]]; if (!e) return "";
     const car = !!e.car;
     const linha = car ? esc(x[2]) + " em " + x[1] + " blocos" : x[1] + " × " + esc(x[2]) + " · descanso " + esc(x[3]);
-    return `<div class="fc${feAberto===i?" ab":""}" data-i="${i}">
+    return `<div class="fcd${feAberto===i?" ab":""}" data-i="${i}">
       <div class="fcr">
         <span class="fh" data-h="${i}" aria-hidden="true">⠿</span>
         <span class="dot" style="background:${CORZ[e.z]}"></span>
@@ -1636,13 +1686,18 @@ function renderFedit(){
 
   $("#fe-picker").style.display = fePicker ? "block" : "none";
   $("#fe-add").textContent = fePicker ? "Fechar a lista" : "+ Adicionar exercício";
-  if (fePicker) $("#fe-picker").innerHTML = renderPicker();
+  if (fePicker) $("#fe-picker").innerHTML =
+    `<div class="pkbar">
+       <input class="txt" id="fe-busca" type="text" autocomplete="off" placeholder="Buscar exercício" value="${esc(feBusca)}">
+       <button class="chip${feAcima?" sel":""}" id="fe-acima">Mostrar acima do meu nível</button>
+       <div class="pkinfo" id="fe-pkinfo"></div>
+     </div><div id="fe-pklist"></div>`;
 
   const r = auditarFicha(feDias);
   const erros = r.av.filter(a => a[0] === "erro");
   $("#fe-audit").innerHTML = "<b>Como está sua ficha</b>"
     + (r.av.length
-        ? `<div class="aud">` + r.av.map(a => `<div class="audrow ${a[0]}"><i></i><span>${esc(a[1])}</span></div>`).join("") + `</div>`
+        ? `<div class="aud">` + r.av.map(a => `<div class="audrow ${a[0] === "erro" ? "erro" : "avi"}"><i></i><span>${esc(a[1])}</span></div>`).join("") + `</div>`
         : "Tudo dentro do previsto para o seu objetivo, nível, tempo e equipamento.")
     + `<div class="volgrid">` + Object.keys(r.vol).sort((a,b)=>r.vol[b]-r.vol[a]).map(g =>
         `<span class="volchip">${esc(g)}<b>${r.vol[g]}</b></span>`).join("") + `</div>`;
@@ -1667,26 +1722,74 @@ function painelItem(x, i, car){
       <button class="chip" data-mv="1"${i===feDiaAtual().it.length-1?" disabled":""}>↓ descer</button>
     </div>
     ${feDias.length>1?`<div class="fcl">Mandar para outro dia</div><div class="chips">${dias}</div>`:""}
+    <div class="fcl">Trocar por outro do mesmo movimento</div>
+    ${(() => { const alt = alternativas(i);
+       if (!alt.length) return `<div class="note" style="margin:0">Não há outro exercício deste movimento disponível em ${esc(localFe().nome)}.</div>`;
+       return `<div class="chips">` + alt.map(id =>
+         `<button class="chip" data-tr="${id}">${esc(EX[id].n)}</button>`).join("") + `</div>`; })()}
     <button class="btn danger" data-rm="${i}">Tirar da ficha</button>
   </div>`;
 }
-function renderPicker(){
-  const eq = expandirEq(localAtual().eq), nivel = NIVN[(D.perfil||{}).nivel] || 2;
+const ORDEM_PAD = ["pe_h","pu_v","pu_h","pe_v","ombro","bic","tri","quad","post","glu","pant","core","cond"];
+function listaPicker(){
+  const eq = expandirEq(localFe().eq), nivel = NIVN[(D.perfil||{}).nivel] || 2;
   const usados = {}; feDiaAtual().it.forEach(x => { usados[x[0]] = 1; });
-  const ordem = ["pe_h","pu_v","pu_h","pe_v","ombro","bic","tri","quad","post","glu","pant","core","cond"];
-  return ordem.map(pad => {
-    const l = (POOL[pad] || []).filter(id => temEq(id, eq) && (EX[id].nv || 1) <= nivel);
+  const b = semAcento(feBusca).trim();
+  let n = 0;
+  const html = ORDEM_PAD.map(pad => {
+    const l = (POOL[pad] || []).filter(id => {
+      if (!temEq(id, eq)) return false;
+      if (!feAcima && (EX[id].nv || 1) > nivel) return false;
+      if (b && semAcento(EX[id].n).indexOf(b) < 0) return false;
+      return true;
+    });
     if (!l.length) return "";
+    n += l.length;
     return `<div class="eqg">${esc(NOMEP[pad] || pad)}</div><div class="pk">` + l.map(id => {
-      const e = EX[id];
+      const e = EX[id], acima = (e.nv || 1) > nivel;
       return `<div class="pki${usados[id]?" ja":""}">
         <span class="pkh" data-pk="${id}" aria-hidden="true">⠿</span>
         <span class="dot" style="background:${CORZ[e.z]}"></span>
         <button class="pkb" data-add="${id}" aria-label="Adicionar ${esc(e.n)} a este dia">
-          <span class="pkn">${esc(e.n)}</span>${usados[id]?"<b>já está</b>":""}</button>
+          <span class="pkn">${esc(e.n)}</span>${usados[id]?"<b>já está</b>":acima?"<b>acima do nível</b>":""}</button>
       </div>`;
     }).join("") + "</div>";
   }).join("");
+  return {html:html || `<div class="empty">Nenhum exercício com esse nome neste lugar.</div>`, n:n};
+}
+function atualizarPicker(){
+  if (!fePicker) return;
+  const r = listaPicker();
+  $("#fe-pklist").innerHTML = r.html;
+  $("#fe-pkinfo").textContent = r.n + (r.n === 1 ? " exercício" : " exercícios")
+    + " em " + localFe().nome.toLowerCase();
+  ligarPicker();
+  ligarArrasto();
+}
+function ligarPicker(){
+  $("#fe-pklist").querySelectorAll(".pkb[data-add]").forEach(b => b.onclick = () => {
+    const it = feDiaAtual().it;
+    it.push(itemNovo(b.dataset.add, papelPorPos(it.length, b.dataset.add)));
+    repapelar(it); renderFedit();
+  });
+}
+/* alternativas do mesmo padrão de movimento, para trocar um exercício */
+function alternativas(i){
+  const it = feDiaAtual().it, x = it[i], e = EX[x[0]];
+  if (!e) return [];
+  const eq = expandirEq(localFe().eq), nivel = NIVN[(D.perfil||{}).nivel] || 2;
+  const usados = {}; it.forEach((y,j) => { if (j !== i) usados[y[0]] = 1; });
+  return (POOL[e.p] || []).filter(id => id !== x[0] && !usados[id]
+    && temEq(id, eq) && (EX[id].nv || 1) <= nivel);
+}
+function trocarItem(i, novoId){
+  const it = feDiaAtual().it, ant = it[i], eA = EX[ant[0]], eN = EX[novoId];
+  if (!eN) return;
+  const mudouTipo = (eA.u === "seg") !== (eN.u === "seg") || !!eA.car !== !!eN.car;
+  if (mudouTipo) it[i] = itemNovo(novoId, ant[4]);
+  else { const x = ant.slice(); x[0] = novoId; it[i] = x; }
+  repapelar(it);
+  feTroca = -1;
 }
 function moverItem(i, delta){
   const it = feDiaAtual().it, j = i + delta;
@@ -1731,11 +1834,21 @@ function ligarFedit(){
   });
   const rp = $("#fe-reps");
   if (rp) rp.onchange = () => { feDiaAtual().it[feAberto][2] = rp.value.trim() || "10"; renderFedit(); };
-  $("#fe-picker").querySelectorAll(".pkb[data-add]").forEach(b => b.onclick = () => {
-    const it = feDiaAtual().it;
-    it.push(itemNovo(b.dataset.add, papelPorPos(it.length, b.dataset.add)));
-    repapelar(it); renderFedit();
+  $("#fe-lista").querySelectorAll("[data-tr]").forEach(b => b.onclick = () => {
+    trocarItem(feAberto, b.dataset.tr); renderFedit();
   });
+  $("#fe-locais").querySelectorAll("[data-fl]").forEach(b => b.onclick = () => {
+    if (b.dataset.fl === feLocal) return;
+    feLocal = b.dataset.fl; feBusca = "";
+    carregarFedit(); renderFedit();
+  });
+  if (fePicker){
+    const bu = $("#fe-busca");
+    if (bu) bu.oninput = () => { feBusca = bu.value; atualizarPicker(); };
+    const ac = $("#fe-acima");
+    if (ac) ac.onclick = () => { feAcima = !feAcima; ac.classList.toggle("sel", feAcima); atualizarPicker(); };
+    atualizarPicker();
+  }
   ligarArrasto();
 }
 /* ---------- arrasto estilo kanban ----------
@@ -1750,7 +1863,7 @@ function alvoDoPonto(x, y){
   }
   const lista = $("#fe-lista"), rl = lista.getBoundingClientRect();
   if (y >= rl.top - 70 && y <= rl.bottom + 70){
-    const cards = lista.querySelectorAll(".fc");
+    const cards = lista.querySelectorAll(".fcd");
     let idx = cards.length;
     for (let i = 0; i < cards.length; i++){
       const r = cards[i].getBoundingClientRect();
@@ -1774,7 +1887,7 @@ function atualizarDrag(ev){
   dgs.alvo = a;
   if (!a) return;
   if (a.t === "aba"){ a.el.classList.add("alvo"); return; }
-  const lista = $("#fe-lista"), cards = lista.querySelectorAll(".fc");
+  const lista = $("#fe-lista"), cards = lista.querySelectorAll(".fcd");
   const d = document.createElement("div");
   d.id = "fe-ph"; d.className = "ph";
   if (a.i >= cards.length) lista.appendChild(d); else lista.insertBefore(d, cards[a.i]);
@@ -1818,6 +1931,8 @@ function soltarDrag(){
   feAberto = -1;
   renderFedit();
 }
+window.addEventListener("pointerup", () => { if (dgs) soltarDrag(); });
+window.addEventListener("pointercancel", () => { if (dgs) soltarDrag(); });
 function ligarArrasto(){
   const liga = (h, origem, el) => {
     h.onpointerdown = ev => {
@@ -1827,7 +1942,7 @@ function ligarArrasto(){
         ? (EX[origem.id] || {}).n
         : (EX[(feDiaAtual().it[origem.i] || [])[0]] || {}).n;
       const g = document.createElement("div");
-      g.className = "ghost";
+      g.className = "dragrot";
       g.textContent = nome || "";
       document.body.appendChild(g);
       document.body.classList.add("arrastando");
@@ -1843,9 +1958,10 @@ function ligarArrasto(){
     };
   };
   $("#fe-lista").querySelectorAll(".fh").forEach(h =>
-    liga(h, {tipo:"mover", i:parseInt(h.dataset.h,10)}, h.closest(".fc")));
+    liga(h, {tipo:"mover", i:parseInt(h.dataset.h,10)}, h.closest(".fcd")));
   $("#fe-picker").querySelectorAll(".pkh").forEach(h =>
     liga(h, {tipo:"novo", id:h.dataset.pk}, h.closest(".pki")));
+  if (dgs) limparMarcas();
 }
 $("#fe-nome").oninput = () => {
   if (!feDias) return;
@@ -1857,9 +1973,9 @@ $("#fe-ok").onclick = async () => {
   if (!feDias) return;
   const r = auditarFicha(feDias);
   if (r.av.some(a => a[0] === "erro")) return;
-  const ant = fichaSalva();
+  const alvo = feLocal || localAtual().id, ant = fichaDoLugar(alvo);
   if (!D.fichas) D.fichas = {};
-  D.fichas[localAtual().id] = {v:1, criado:(ant && ant.criado) || Date.now(),
+  D.fichas[alvo] = {v:1, criado:(ant && ant.criado) || Date.now(),
     rev:((ant && ant.rev) || 0) + 1,
     dias:feDias.map(d => ({cod:d.cod, tipo:d.tipo || "custom", it:d.it}))};
   D.modo = "custom";
@@ -1876,6 +1992,7 @@ function mostrar(v){
   document.querySelectorAll(".view").forEach(e => e.classList.remove("on"));
   $("#v-"+v).classList.add("on");
   $("#back").style.display = (v === "home" || v === "cal" || v === "hist" || v === "perfil") ? "none" : "flex";
+  if (dgs && v !== "fedit") soltarDrag();
   $("#pbar").style.display = (v === "treino") ? "block" : "none";
   const emTreino = (v === "treino");
   $("#crono").classList.toggle("on", emTreino);
@@ -2782,10 +2899,8 @@ function renderPerfil(){
          <div class="t">Minha ficha</div><div class="s">${propria ? "Montada por você, " + fichaSalva().dias.length + (fichaSalva().dias.length===1?" dia":" dias") : "Ainda não montada neste lugar"}</div></button>
      </div>
      <button class="btn ghost" id="pedit">${propria ? "Editar minha ficha" : "Montar minha ficha"}</button>
-     <div class="seclbl mt">Imprimir</div>
-     <button class="btn ghost" id="pimp-dia">Imprimir o próximo treino</button>
-     <button class="btn ghost" id="pimp-sem">Imprimir a semana inteira</button>
-     <div class="note">Sai com uma coluna em branco por série, para anotar carga e repetições à mão. Na janela de impressão dá para escolher salvar em PDF.</div>`;
+     ${D.modo === "custom" ? "" : `<button class="btn ghost" id="psort">Sortear outra versão da ficha automática</button>
+     <div class="note">Mesmo objetivo, mesmo volume e mesmo tempo — troca quais exercícios entram, entre os ${contarDisponiveis().nivel} disponíveis em ${esc(localAtual().nome)}. Versão ${(D.variacao||0)+1}.</div>`}`;
   $("#pficha").querySelectorAll("[data-md]").forEach(b => b.onclick = async () => {
     if (b.dataset.md === "custom" && !propria) return abrirFedit();
     D.modo = b.dataset.md;
@@ -2795,6 +2910,13 @@ function renderPerfil(){
     renderPerfil();
   });
   $("#pedit").onclick = () => abrirFedit();
+  if ($("#psort")) $("#psort").onclick = async () => {
+    D.variacao = ((D.variacao || 0) + 1) % 12;
+    cacheProg = null;
+    D.rascunhos = {}; D.inicios = {}; D.cron = {}; D.ultimoDia = 0;
+    await DB.gravar();
+    renderPerfil();
+  };
   $("#pimp-dia").onclick = () => imprimir("dia");
   $("#pimp-sem").onclick = () => imprimir("semana");
   const atual = localAtual().id;
@@ -2873,7 +2995,8 @@ $("#gerar").onclick = async () => {
   D.local = form.local || listaLocais()[0].id;
   D.localDia = null;
   cacheProg = null;
-  D.programa = gerarPrograma(Object.assign({}, form, {eq:localAtual().eq}));
+  D.variacao = 0;
+  D.programa = gerarPrograma(Object.assign({}, form, {eq:localAtual().eq, variacao:0}));
   D.semana = null;
   D.rascunhos = {}; D.inicios = {}; D.cron = {}; D.ultimoDia = 0;
   await DB.gravar();
