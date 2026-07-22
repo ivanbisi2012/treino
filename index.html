@@ -295,6 +295,56 @@ html:not(.js) .top,html:not(.js) .wrap,html:not(.js) .tabs{display:none!importan
 .eqart{width:64px;height:48px;flex:0 0 auto;color:var(--mut);background:var(--bg2);
   border:1px solid var(--line);border-radius:10px;padding:1px}
 .opt.sel .eqart{color:var(--z4);border-color:var(--z4)}
+.fetabs{display:flex;gap:7px;overflow-x:auto;padding-bottom:3px;margin-bottom:14px;-webkit-overflow-scrolling:touch}
+.fetab{flex:0 0 auto;min-height:44px;padding:0 14px;border-radius:11px;background:var(--surf);
+  border:1px solid var(--line);color:var(--mut);font-family:var(--cond);font-weight:700;font-size:15px;
+  text-transform:uppercase;letter-spacing:.02em;display:flex;align-items:center;gap:7px}
+.fetab span{font-family:var(--body);font-size:11.5px;font-weight:700;background:var(--surf2);
+  color:var(--mut);border-radius:6px;padding:1px 6px}
+.fetab.sel{background:var(--acc);color:var(--inv);border-color:var(--acc)}
+.fetab.sel span{background:rgba(127,127,127,.28);color:var(--inv)}
+.fetab.add{font-family:var(--body);font-size:13px;text-transform:none;letter-spacing:0}
+.fc{background:var(--surf);border:1px solid var(--line);border-radius:13px;margin-bottom:9px;
+  box-shadow:var(--sh);overflow:hidden}
+.fc.ab{border-color:var(--line2)}
+.fc.arr{opacity:.85;box-shadow:var(--sh2);position:relative;z-index:6}
+.fc .fcr{display:flex;align-items:center;gap:2px;padding-right:6px}
+.fh{width:38px;min-height:56px;display:flex;align-items:center;justify-content:center;
+  color:var(--mut2);font-size:17px;cursor:grab;touch-action:none;flex:0 0 auto}
+.fc .dot{flex:0 0 auto;margin-right:8px}
+.fct{flex:1;min-width:0;text-align:left;padding:11px 0;min-height:56px}
+.fcn{display:block;font-weight:600;font-size:14.5px;line-height:1.25}
+.fcs{display:block;font-size:12.5px;color:var(--mut);margin-top:3px}
+.fcp{border-top:1px solid var(--line);padding:13px 14px 14px}
+.fcl{font-size:11px;color:var(--mut2);letter-spacing:.14em;text-transform:uppercase;
+  font-weight:700;margin:12px 0 7px}
+.fcp .fcl:first-child{margin-top:0}
+.stp{display:flex;align-items:center;gap:12px}
+.stp button{width:46px;height:46px;border-radius:11px;background:var(--surf2);border:1px solid var(--line);
+  color:var(--tx);font-size:20px;font-weight:600}
+.stp button:active{background:var(--line)}
+.stp span{font-family:var(--cond);font-weight:700;font-size:22px;min-width:28px;text-align:center}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{min-height:44px;padding:0 13px;border-radius:11px;background:var(--surf2);border:1px solid var(--line);
+  color:var(--mut);font-size:13px;font-weight:600}
+.chip.sel{background:var(--acc);color:var(--inv);border-color:var(--acc)}
+.chip[disabled]{opacity:.4}
+.pk{display:flex;flex-direction:column;gap:7px;margin-bottom:14px}
+.pki{display:flex;align-items:center;gap:9px;width:100%;min-height:50px;padding:8px 12px;text-align:left;
+  background:var(--surf);border:1px solid var(--line);border-radius:12px;font-size:14px;color:var(--tx)}
+.pki:active{background:var(--surf2)}
+.pki .pkn{flex:1;min-width:0}
+.pki b{font-size:11.5px;color:var(--mut2);font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.pki.ja{opacity:.55}
+.aud{margin-top:9px;display:flex;flex-direction:column;gap:8px}
+.audrow{display:flex;gap:9px;align-items:flex-start;font-size:13px;line-height:1.4;color:var(--tx)}
+.audrow i{width:7px;height:7px;border-radius:4px;flex:0 0 auto;margin-top:6px;background:var(--z3)}
+.audrow.erro i{background:var(--z1)}
+.volgrid{display:flex;flex-wrap:wrap;gap:6px;margin-top:13px;padding-top:13px;border-top:1px solid var(--line)}
+.volchip{font-size:12px;color:var(--mut);background:var(--bg2);border:1px solid var(--line);
+  border-radius:8px;padding:4px 8px}
+.volchip b{color:var(--tx);font-family:var(--cond);font-size:14px;margin-left:6px}
+.btn[disabled]{opacity:.5}
 .fchip i{font-style:normal;color:var(--mut2);font-weight:600;margin-left:6px}
 .blk{display:flex;gap:8px;align-items:baseline;margin:14px 0 -2px;font-size:12.5px;color:var(--mut);line-height:1.35}
 .blk b{font-family:var(--cond);font-size:14px;font-weight:700;color:var(--tx);letter-spacing:.02em;
@@ -657,6 +707,23 @@ html:not(.js) .top,html:not(.js) .wrap,html:not(.js) .tabs{display:none!importan
     <button class="btn danger" id="eq-del" style="display:none">Remover este lugar</button>
   </div>
 
+  <!-- MINHA FICHA -->
+  <div class="view" id="v-fedit">
+    <p class="intro" id="fe-intro"></p>
+    <div class="fetabs" id="fe-dias"></div>
+    <div class="step">
+      <div class="qlbl">Nome deste dia</div>
+      <input class="txt" id="fe-nome" type="text" maxlength="22" autocomplete="off" placeholder="Treino A">
+    </div>
+    <div id="fe-lista"></div>
+    <button class="btn ghost" id="fe-add">+ Adicionar exercício</button>
+    <div id="fe-picker" style="display:none"></div>
+    <div class="metodo" id="fe-audit"></div>
+    <div style="height:16px"></div>
+    <button class="btn" id="fe-ok">Salvar e usar esta ficha</button>
+    <button class="btn ghost" id="fe-cancel">Cancelar</button>
+  </div>
+
   <!-- HISTÓRICO -->
   <div class="view" id="v-hist">
     <div id="hlist"></div>
@@ -672,6 +739,10 @@ html:not(.js) .top,html:not(.js) .wrap,html:not(.js) .tabs{display:none!importan
   <div class="view" id="v-perfil">
     <div id="plist"></div>
     <div class="metodo" id="pmetodo"></div>
+
+    <div class="seclbl mt">Sua ficha</div>
+    <div id="pficha"></div>
+    <div class="note">A automática é remontada sempre que você muda perfil, semana ou lugar. A sua fica como você deixou, guardada por lugar de treino.</div>
 
     <div class="seclbl mt">Onde você treina</div>
     <div id="plocais"></div>
@@ -1190,7 +1261,7 @@ const DB = (function(){
   }
   const vazio = () => ({perfil:null, programa:null, semana:null, historico:[], rascunhos:{},
                         inicios:{}, cron:{}, usadas:{}, ultima:null, ultimoDia:0,
-                        locais:null, local:null, localDia:null});
+                        locais:null, local:null, localDia:null, fichas:{}, modo:"auto"});
   async function bruto(k){
     try {
       if (modo === "ws"){ const r = await window.storage.get(k,false); return r ? r.value : null; }
@@ -1344,8 +1415,24 @@ function assinaturaPerfil(){
   const p = D.perfil || {};
   return [p.sexo, p.objetivo, p.dur, p.nivel, p.enfase].join("/");
 }
+function fichaSalva(){ return (D.fichas && D.fichas[localAtual().id]) || null; }
+function temFichaPropria(){ const f = fichaSalva(); return !!(f && f.dias && f.dias.length); }
+function prepararCustom(f){
+  const dias = f.dias.map(d => {
+    const it = d.it.map(x => x.slice());
+    return {cod:d.cod, tipo:d.tipo || "custom", foco:focoDe(it), min:estimar(it), it:it};
+  });
+  return {v:3, custom:1, criado:f.criado, perfil:JSON.parse(JSON.stringify(D.perfil||{})), dias:dias};
+}
 function programaAtual(){
   const loc = localAtual(), meta = metaSemana();
+  if (D.modo === "custom" && temFichaPropria()){
+    const f = fichaSalva(), kc = "custom|" + loc.id + "|" + (f.rev || 0);
+    if (cacheProg && cacheProg.k === kc) return cacheProg.p;
+    const pc = prepararCustom(f);
+    cacheProg = {k:kc, p:pc};
+    return pc;
+  }
   const k = loc.id + "|" + loc.eq.slice().sort().join(",") + "|" + (loc.halMax||40) + "|" + meta + "|" + assinaturaPerfil();
   if (cacheProg && cacheProg.k === k) return cacheProg.p;
   const pf = Object.assign({}, D.perfil, {freq:meta, eq:loc.eq, halMax:loc.halMax});
@@ -1356,8 +1443,276 @@ function programaAtual(){
 function chaveRasc(i){ return localAtual().id + ":" + i; }
 function assinatura(p){ return p ? p.dias.map(d => d.cod + ":" + d.it.map(x => x[0]).join(",")).join("|") : ""; }
 
+/* ==================== FICHA MONTADA PELA PESSOA ==================== */
+/* faixa de séries por grupo muscular na semana, por objetivo */
+const ALVO_SERIES = {massa:[10,22], recomp:[9,20], definicao:[9,20],
+                     emagrecer:[8,18], forca:[8,20], saude:[6,16]};
+const DESC_OPC = [30,45,60,75,90,120,150,180];
+
+function papelPorPos(i, id){
+  if (EX[id] && EX[id].p === "cond") return "E";
+  return i === 0 ? "A" : i === 1 ? "B" : i < 5 ? "C" : "D";
+}
+function repapelar(it){ it.forEach((x,i) => { x[4] = papelPorPos(i, x[0]); }); }
+function itemNovo(id, papel){
+  const pf = D.perfil || {}, prot = PROT[pf.objetivo] || PROT.recomp;
+  const p = prot[papel] || prot.C, e = EX[id], nivel = NIVN[pf.nivel] || 2;
+  let sr = p.s;
+  if (papel === "A" || papel === "B"){
+    if (nivel === 1 && sr >= 4) sr -= 1;
+    else if (nivel === 3 && papel === "A") sr += 1;
+  }
+  sr = Math.max(2, Math.min(6, sr));
+  let reps = e.u === "seg" ? p.t : p.r;
+  if (id === "E08" || id === "E27") reps = "máximo";
+  const x = [id, sr, reps, p.d, papel, ""];
+  if (e.car){
+    const bl = (CARDIO_BLOCOS[pf.dur] || CARDIO_BLOCOS.medio).map(b => b.slice());
+    let tot = 0; bl.forEach(b => { tot += b[0]; });
+    x[1] = bl.length; x[2] = Math.round(tot/60) + " min"; x[3] = "0s"; x[6] = bl;
+  }
+  return x;
+}
+/* confere a ficha contra o objetivo, o nível, o tempo e o equipamento do lugar */
+function auditarFicha(dias){
+  const pf = D.perfil || {}, loc = localAtual(), eq = expandirEq(loc.eq);
+  const nivel = NIVN[pf.nivel] || 2, lim = LIM[pf.dur] || 62;
+  const av = [], vol = {};
+  dias.forEach(d => {
+    const fams = {}, ids = {};
+    let base = false;
+    d.it.forEach(x => {
+      const e = EX[x[0]]; if (!e) return;
+      if (x[4] === "A" || x[4] === "B") base = true;
+      if (ids[x[0]]) av.push(["erro", d.cod + ": " + e.n + " está repetido no mesmo dia"]);
+      ids[x[0]] = 1;
+      if (e.g && fams[e.g]) av.push(["aviso", d.cod + ": " + e.n + " repete a família de movimento do dia"]);
+      if (e.g) fams[e.g] = 1;
+      if ((e.nv || 1) > nivel) av.push(["aviso", d.cod + ": " + e.n + " está acima do nível " + (TXT_NIV[pf.nivel]||"").toLowerCase()]);
+      if (!temEq(x[0], eq)) av.push(["erro", d.cod + ": " + e.n + " precisa de equipamento que não existe em " + loc.nome]);
+      const g = NOMEP[e.p];
+      if (g && !e.car) vol[g] = (vol[g] || 0) + x[1];
+    });
+    if (!d.it.length) av.push(["erro", d.cod + " está sem exercício"]);
+    else if (!base) av.push(["aviso", d.cod + " não tem composto principal nas duas primeiras posições"]);
+    const m = estimar(d.it);
+    if (m > lim) av.push(["aviso", d.cod + " leva cerca de " + m + " min e seu limite é " + lim]);
+  });
+  const alvo = ALVO_SERIES[pf.objetivo] || [8,20];
+  const costas = (vol["dorsal"] || 0) + (vol["costas"] || 0);
+  [["peito", vol["peito"] || 0], ["costas e dorsal", costas],
+   ["quadríceps", vol["quadríceps"] || 0], ["posterior", vol["posterior"] || 0]].forEach(par => {
+    if (!par[1]) av.push(["aviso", "nenhuma série para " + par[0] + " na semana"]);
+    else if (par[1] < alvo[0]) av.push(["aviso", par[0] + ": " + par[1] + " séries na semana, pouco para o seu objetivo (alvo " + alvo[0] + " a " + alvo[1] + ")"]);
+    else if (par[1] > alvo[1]) av.push(["aviso", par[0] + ": " + par[1] + " séries na semana, acima do alvo de " + alvo[1]]);
+  });
+  return {av:av, vol:vol, alvo:alvo};
+}
+
+let feDias = null, feDia = 0, fePicker = false, feAberto = -1;
+
+function abrirFedit(){
+  if (temFichaPropria()) feDias = JSON.parse(JSON.stringify(fichaSalva().dias));
+  else feDias = programaAtual().dias.map(d => ({cod:d.cod, tipo:d.tipo, it:JSON.parse(JSON.stringify(d.it))}));
+  feDias.forEach(d => repapelar(d.it));
+  feDia = 0; fePicker = false; feAberto = -1;
+  $("#ttl").textContent = "Minha ficha";
+  $("#stl").textContent = "monte do seu jeito";
+  renderFedit();
+  mostrar("fedit");
+}
+function feDiaAtual(){ return feDias[feDia]; }
+function renderFedit(){
+  const pf = D.perfil || {}, d = feDiaAtual();
+  $("#fe-intro").innerHTML = "Arraste pelo <b>⠿</b> para trocar a ordem e toque no exercício para ajustar séries, repetições e descanso. "
+    + "Os números já entram no padrão de <b>" + esc((TXT_OBJ[pf.objetivo]||"").toLowerCase()) + "</b> — o quadro embaixo avisa quando a ficha sai do objetivo.";
+  $("#fe-dias").innerHTML = feDias.map((x,i) =>
+    `<button class="fetab${i===feDia?" sel":""}" data-d="${i}">${esc(x.cod)}<span>${x.it.length}</span></button>`).join("")
+    + `<button class="fetab add" id="fe-adddia">+ dia</button>`;
+  $("#fe-nome").value = d.cod;
+
+  $("#fe-lista").innerHTML = d.it.map((x,i) => {
+    const e = EX[x[0]]; if (!e) return "";
+    const car = !!e.car;
+    const linha = car ? esc(x[2]) + " em " + x[1] + " blocos" : x[1] + " × " + esc(x[2]) + " · descanso " + esc(x[3]);
+    return `<div class="fc${feAberto===i?" ab":""}" data-i="${i}">
+      <div class="fcr">
+        <span class="fh" data-h="${i}" aria-hidden="true">⠿</span>
+        <span class="dot" style="background:${CORZ[e.z]}"></span>
+        <button class="fct" data-t="${i}">
+          <span class="fcn">${esc(e.n)}</span>
+          <span class="fcs">${linha}</span>
+        </button>
+      </div>
+      ${feAberto===i ? painelItem(x, i, car) : ""}
+    </div>`;
+  }).join("") || `<div class="empty">Dia sem exercício. Toque em adicionar.</div>`;
+
+  $("#fe-picker").style.display = fePicker ? "block" : "none";
+  $("#fe-add").textContent = fePicker ? "Fechar a lista" : "+ Adicionar exercício";
+  if (fePicker) $("#fe-picker").innerHTML = renderPicker();
+
+  const r = auditarFicha(feDias);
+  const erros = r.av.filter(a => a[0] === "erro");
+  $("#fe-audit").innerHTML = "<b>Como está sua ficha</b>"
+    + (r.av.length
+        ? `<div class="aud">` + r.av.map(a => `<div class="audrow ${a[0]}"><i></i><span>${esc(a[1])}</span></div>`).join("") + `</div>`
+        : "Tudo dentro do previsto para o seu objetivo, nível, tempo e equipamento.")
+    + `<div class="volgrid">` + Object.keys(r.vol).sort((a,b)=>r.vol[b]-r.vol[a]).map(g =>
+        `<span class="volchip">${esc(g)}<b>${r.vol[g]}</b></span>`).join("") + `</div>`;
+  $("#fe-ok").disabled = erros.length > 0;
+  $("#fe-ok").textContent = erros.length ? "Corrija os pontos em vermelho" : "Salvar e usar esta ficha";
+  ligarFedit();
+}
+function painelItem(x, i, car){
+  const dias = feDias.map((y,j) => j===feDia ? "" :
+    `<button class="chip" data-mvd="${j}">${esc(y.cod)}</button>`).join("");
+  return `<div class="fcp">
+    ${car ? `<div class="fcl">Blocos</div><div class="note" style="margin:0 0 10px">${esc(x[2])} em ${x[1]} blocos progressivos, montados pelo tempo da sua sessão. Não têm série nem carga.</div>` : `
+    <div class="fcl">Séries</div>
+    <div class="stp"><button data-s="-">−</button><span>${x[1]}</span><button data-s="+">+</button></div>
+    <div class="fcl">Repetições</div>
+    <input class="txt" id="fe-reps" value="${esc(x[2])}" maxlength="10" autocomplete="off">
+    <div class="fcl">Descanso</div>
+    <div class="chips">${DESC_OPC.map(v => `<button class="chip${parseInt(x[3],10)===v?" sel":""}" data-ds="${v}">${v}s</button>`).join("")}</div>`}
+    <div class="fcl">Posição</div>
+    <div class="chips">
+      <button class="chip" data-mv="-1"${i===0?" disabled":""}>↑ subir</button>
+      <button class="chip" data-mv="1"${i===feDiaAtual().it.length-1?" disabled":""}>↓ descer</button>
+    </div>
+    ${feDias.length>1?`<div class="fcl">Mandar para outro dia</div><div class="chips">${dias}</div>`:""}
+    <button class="btn danger" data-rm="${i}">Tirar da ficha</button>
+  </div>`;
+}
+function renderPicker(){
+  const eq = expandirEq(localAtual().eq), nivel = NIVN[(D.perfil||{}).nivel] || 2;
+  const usados = {}; feDiaAtual().it.forEach(x => { usados[x[0]] = 1; });
+  const ordem = ["pe_h","pu_v","pu_h","pe_v","ombro","bic","tri","quad","post","glu","pant","core","cond"];
+  return ordem.map(pad => {
+    const l = (POOL[pad] || []).filter(id => temEq(id, eq) && (EX[id].nv || 1) <= nivel);
+    if (!l.length) return "";
+    return `<div class="eqg">${esc(NOMEP[pad] || pad)}</div><div class="pk">` + l.map(id => {
+      const e = EX[id];
+      return `<button class="pki${usados[id]?" ja":""}" data-add="${id}">
+        <span class="dot" style="background:${CORZ[e.z]}"></span>
+        <span class="pkn">${esc(e.n)}</span>${usados[id]?"<b>já está</b>":""}</button>`;
+    }).join("") + "</div>";
+  }).join("");
+}
+function moverItem(i, delta){
+  const it = feDiaAtual().it, j = i + delta;
+  if (j < 0 || j >= it.length) return;
+  const t = it[i]; it[i] = it[j]; it[j] = t;
+  repapelar(it);
+  feAberto = j;
+}
+function ligarFedit(){
+  $("#fe-dias").querySelectorAll(".fetab[data-d]").forEach(b => b.onclick = () => {
+    feDia = parseInt(b.dataset.d,10); feAberto = -1; renderFedit();
+  });
+  $("#fe-adddia").onclick = () => {
+    feDias.push({cod:"Treino " + String.fromCharCode(65 + feDias.length), tipo:"custom", it:[]});
+    feDia = feDias.length - 1; feAberto = -1; renderFedit();
+  };
+  $("#fe-lista").querySelectorAll(".fct").forEach(b => b.onclick = () => {
+    const i = parseInt(b.dataset.t,10);
+    feAberto = (feAberto === i) ? -1 : i;
+    renderFedit();
+  });
+  $("#fe-lista").querySelectorAll("[data-s]").forEach(b => b.onclick = () => {
+    const x = feDiaAtual().it[feAberto];
+    x[1] = Math.max(1, Math.min(8, x[1] + (b.dataset.s === "+" ? 1 : -1)));
+    renderFedit();
+  });
+  $("#fe-lista").querySelectorAll("[data-ds]").forEach(b => b.onclick = () => {
+    feDiaAtual().it[feAberto][3] = b.dataset.ds + "s"; renderFedit();
+  });
+  $("#fe-lista").querySelectorAll("[data-mv]").forEach(b => b.onclick = () => {
+    moverItem(feAberto, parseInt(b.dataset.mv,10)); renderFedit();
+  });
+  $("#fe-lista").querySelectorAll("[data-mvd]").forEach(b => b.onclick = () => {
+    const alvo = parseInt(b.dataset.mvd,10), it = feDiaAtual().it;
+    feDias[alvo].it.push(it.splice(feAberto,1)[0]);
+    repapelar(it); repapelar(feDias[alvo].it);
+    feAberto = -1; renderFedit();
+  });
+  $("#fe-lista").querySelectorAll("[data-rm]").forEach(b => b.onclick = () => {
+    feDiaAtual().it.splice(parseInt(b.dataset.rm,10),1);
+    repapelar(feDiaAtual().it); feAberto = -1; renderFedit();
+  });
+  const rp = $("#fe-reps");
+  if (rp) rp.onchange = () => { feDiaAtual().it[feAberto][2] = rp.value.trim() || "10"; renderFedit(); };
+  $("#fe-picker").querySelectorAll("[data-add]").forEach(b => b.onclick = () => {
+    const it = feDiaAtual().it;
+    it.push(itemNovo(b.dataset.add, papelPorPos(it.length, b.dataset.add)));
+    repapelar(it); renderFedit();
+  });
+  ligarArrasto();
+}
+/* arrastar para reordenar — funciona com dedo e com mouse */
+function ligarArrasto(){
+  const lista = $("#fe-lista");
+  lista.querySelectorAll(".fh").forEach(h => {
+    h.onpointerdown = ev => {
+      const el = h.closest(".fc");
+      if (!el) return;
+      ev.preventDefault();
+      let y0 = ev.clientY;
+      el.classList.add("arr");
+      try { h.setPointerCapture(ev.pointerId); } catch(e){}
+      h.onpointermove = e2 => {
+        el.style.transform = "translateY(" + (e2.clientY - y0) + "px)";
+        const r = el.getBoundingClientRect(), meio = r.top + r.height/2;
+        const irmaos = Array.prototype.slice.call(lista.querySelectorAll(".fc"));
+        for (let i = 0; i < irmaos.length; i++){
+          const o = irmaos[i]; if (o === el) continue;
+          const ro = o.getBoundingClientRect();
+          if (meio > ro.top && meio < ro.bottom){
+            const antes = irmaos.indexOf(o) < irmaos.indexOf(el);
+            el.style.transform = "";
+            lista.insertBefore(el, antes ? o : o.nextSibling);
+            y0 = e2.clientY;
+            break;
+          }
+        }
+      };
+      h.onpointerup = h.onpointercancel = () => {
+        h.onpointermove = null; h.onpointerup = null;
+        el.style.transform = ""; el.classList.remove("arr");
+        const ordem = Array.prototype.map.call(lista.querySelectorAll(".fc"), c => parseInt(c.dataset.i,10));
+        feDiaAtual().it = ordem.map(i => feDiaAtual().it[i]);
+        repapelar(feDiaAtual().it);
+        feAberto = -1;
+        renderFedit();
+      };
+    };
+  });
+}
+$("#fe-nome").oninput = () => {
+  if (!feDias) return;
+  const v = $("#fe-nome").value.trim();
+  if (v){ feDiaAtual().cod = v; $("#fe-dias").querySelectorAll(".fetab")[feDia].firstChild.textContent = v; }
+};
+$("#fe-add").onclick = () => { if (!feDias) return; fePicker = !fePicker; renderFedit(); };
+$("#fe-ok").onclick = async () => {
+  if (!feDias) return;
+  const r = auditarFicha(feDias);
+  if (r.av.some(a => a[0] === "erro")) return;
+  const ant = fichaSalva();
+  if (!D.fichas) D.fichas = {};
+  D.fichas[localAtual().id] = {v:1, criado:(ant && ant.criado) || Date.now(),
+    rev:((ant && ant.rev) || 0) + 1,
+    dias:feDias.map(d => ({cod:d.cod, tipo:d.tipo || "custom", it:d.it}))};
+  D.modo = "custom";
+  cacheProg = null;
+  D.rascunhos = {}; D.inicios = {}; D.cron = {}; D.ultimoDia = 0;
+  await DB.gravar();
+  irAba("home");
+};
+$("#fe-cancel").onclick = () => irAba("perfil");
+
 /* ============================ NAVEGAÇÃO ============================ */
-const SEMTABS = {setup:1, treino:1, res:1, semana:1, local:1, eqp:1};
+const SEMTABS = {setup:1, treino:1, res:1, semana:1, local:1, eqp:1, fedit:1};
 function mostrar(v){
   document.querySelectorAll(".view").forEach(e => e.classList.remove("on"));
   $("#v-"+v).classList.add("on");
@@ -1405,9 +1760,9 @@ const OPC = {
   {v:"medio",t:"45 a 60 minutos",s:"Equilíbrio entre volume e tempo",w:1},
   {v:"longo",t:"60 a 75 minutos",s:"Volume completo, sem pressa",w:1}],
  nivel:[
-  {v:"iniciante",t:"Começando agora",s:"Até 6 meses"},
-  {v:"intermediario",t:"Já tenho rotina",s:"6 meses a 2 anos"},
-  {v:"avancado",t:"Treino há anos",s:"Mais de 2 anos",w:1}],
+  {v:"iniciante",t:"Iniciante",s:"Até 6 meses de treino, ou voltando depois de uma parada longa",w:1},
+  {v:"intermediario",t:"Amador",s:"6 meses a 2 anos, já com rotina e à vontade nos aparelhos",w:1},
+  {v:"avancado",t:"Profissional",s:"Mais de 2 anos treinando sério e sem interrupção",w:1}],
  enf:[
   {v:"inferior",t:"Pernas e glúteo"},
   {v:"equilibrado",t:"Equilibrado"},
@@ -1521,7 +1876,7 @@ async function confirmarSemana(){
 const TXT_OBJ  = {emagrecer:"Emagrecer", definicao:"Definição muscular", massa:"Ganhar massa",
                   recomp:"Emagrecer e ganhar massa", forca:"Força bruta", saude:"Saúde e disposição"};
 const TXT_DUR  = {curto:"30 a 40 min", medio:"45 a 60 min", longo:"60 a 75 min"};
-const TXT_NIV  = {iniciante:"Começando agora", intermediario:"Já tenho rotina", avancado:"Treino há anos"};
+const TXT_NIV  = {iniciante:"Iniciante", intermediario:"Amador", avancado:"Profissional"};
 const TXT_ENF  = {inferior:"Pernas e glúteo", equilibrado:"Equilibrado", superior:"Peito, costas e braços"};
 const TXT_SEXO = {h:"Homem", m:"Mulher"};
 const METODO = {
@@ -2246,9 +2601,27 @@ function renderPerfil(){
     linha("Tempo por sessão", TXT_DUR[p.dur]) +
     linha("Experiência", TXT_NIV[p.nivel]) +
     linha("Ênfase", TXT_ENF[p.enfase]) +
-    linha("Ficha montada em", new Date(D.programa.criado).toLocaleDateString("pt-BR",{day:"2-digit",month:"long",year:"numeric"})) +
+    linha("Ficha em uso", D.modo === "custom" && temFichaPropria() ? "Montada por você" : "Automática, pelo objetivo") +
     linha("Esta semana", sessoesSemana(Date.now()).length + " de " + metaSemana() + (metaSemana() === 1 ? " treino" : " treinos"));
   $("#pmetodo").innerHTML = "<b>" + esc(TXT_OBJ[p.objetivo] || "") + " · como a ficha foi montada</b>" + esc(METODO[p.objetivo] || "");
+  const propria = temFichaPropria();
+  $("#pficha").innerHTML =
+    `<div class="opts">
+       <button class="opt${D.modo !== "custom" ? " sel" : ""}" data-md="auto">
+         <div class="t">Automática</div><div class="s">O app monta pelo seu objetivo, nível e equipamento</div></button>
+       <button class="opt${D.modo === "custom" ? " sel" : ""}" data-md="custom">
+         <div class="t">Minha ficha</div><div class="s">${propria ? "Montada por você, " + fichaSalva().dias.length + (fichaSalva().dias.length===1?" dia":" dias") : "Ainda não montada neste lugar"}</div></button>
+     </div>
+     <button class="btn ghost" id="pedit">${propria ? "Editar minha ficha" : "Montar minha ficha"}</button>`;
+  $("#pficha").querySelectorAll("[data-md]").forEach(b => b.onclick = async () => {
+    if (b.dataset.md === "custom" && !propria) return abrirFedit();
+    D.modo = b.dataset.md;
+    cacheProg = null;
+    D.rascunhos = {}; D.inicios = {}; D.cron = {}; D.ultimoDia = 0;
+    await DB.gravar();
+    renderPerfil();
+  });
+  $("#pedit").onclick = () => abrirFedit();
   const atual = localAtual().id;
   $("#plocais").innerHTML = listaLocais().map(l =>
     `<button class="hrow" data-l="${esc(l.id)}">
