@@ -41,6 +41,17 @@
   --safet:env(safe-area-inset-top,0px);
   --r:14px;
 }
+:root{ --tint:0,0,0; --tintA:0; }
+html[data-cor="violeta"]{ --acc:#7C5CE6; --inv:#FFFFFF; --tint:124,92,230; --tintA:.20 }
+html[data-cor="azul"]   { --acc:#2A76D0; --inv:#FFFFFF; --tint:46,127,224;  --tintA:.20 }
+html[data-cor="verde"]  { --acc:#10865E; --inv:#FFFFFF; --tint:19,153,107;  --tintA:.20 }
+html[data-cor="ambar"]  { --acc:#A5680F; --inv:#FFFFFF; --tint:192,122,18;  --tintA:.19 }
+html[data-cor="carmim"] { --acc:#D6394D; --inv:#FFFFFF; --tint:214,57,77;   --tintA:.19 }
+html[data-tema="claro"][data-cor="violeta"]{ --acc:#5B3FD1; --tint:91,63,209;  --tintA:.15 }
+html[data-tema="claro"][data-cor="azul"]   { --acc:#1668CC; --tint:22,104,204; --tintA:.15 }
+html[data-tema="claro"][data-cor="verde"]  { --acc:#0C7551; --tint:14,138,95;  --tintA:.15 }
+html[data-tema="claro"][data-cor="ambar"]  { --acc:#8F5A00; --tint:143,90,0;   --tintA:.14 }
+html[data-tema="claro"][data-cor="carmim"] { --acc:#B2172C; --tint:178,23,44;  --tintA:.14 }
 html[data-tema="claro"]{
   color-scheme:light;
   --bg:#EBEEF3; --bg2:#F3F5F9; --surf:#FFFFFF; --surf2:#F0F3F7;
@@ -54,6 +65,11 @@ html[data-tema="claro"]{
   --ring:rgba(15,23,32,.08);
 }
 @media (prefers-color-scheme:light){
+  html[data-tema="auto"][data-cor="violeta"]{ --acc:#5B3FD1; --tint:91,63,209;  --tintA:.15 }
+  html[data-tema="auto"][data-cor="azul"]   { --acc:#1668CC; --tint:22,104,204; --tintA:.15 }
+  html[data-tema="auto"][data-cor="verde"]  { --acc:#0C7551; --tint:14,138,95;  --tintA:.15 }
+  html[data-tema="auto"][data-cor="ambar"]  { --acc:#8F5A00; --tint:143,90,0;   --tintA:.14 }
+  html[data-tema="auto"][data-cor="carmim"] { --acc:#B2172C; --tint:178,23,44;  --tintA:.14 }
   html[data-tema="auto"]{
   color-scheme:light;
   --bg:#EBEEF3; --bg2:#F3F5F9; --surf:#FFFFFF; --surf2:#F0F3F7;
@@ -73,8 +89,10 @@ html[data-tema="claro"]{
 html,body{margin:0;padding:0;background:var(--bg);color:var(--tx);font-family:var(--body);
   font-size:16px;line-height:1.45;-webkit-text-size-adjust:100%;
   -webkit-font-smoothing:antialiased;overscroll-behavior-y:none}
-body{min-height:100%;background-image:radial-gradient(120% 60% at 50% 0%,var(--bg2) 0%,var(--bg) 62%);
-  background-attachment:fixed}
+body{min-height:100%;background-attachment:fixed;
+  background-image:
+    radial-gradient(128% 58% at 50% -8%, rgba(var(--tint),var(--tintA)) 0%, rgba(var(--tint),0) 60%),
+    radial-gradient(120% 60% at 50% 0%, var(--bg2) 0%, var(--bg) 62%)}
 button{font-family:inherit;color:inherit;border:none;background:none;cursor:pointer;
   touch-action:manipulation;-webkit-appearance:none;appearance:none}
 input{font-family:inherit;-webkit-appearance:none;appearance:none;border-radius:0}
@@ -346,6 +364,31 @@ html:not(.js) .top,html:not(.js) .wrap,html:not(.js) .tabs{display:none!importan
 .volchip b{color:var(--tx);font-family:var(--cond);font-size:14px;margin-left:6px}
 .btn[disabled]{opacity:.5}
 .fetabs{position:sticky;z-index:5;background:var(--bg);padding:9px 0 8px;margin-top:-9px}
+.cores{display:flex;flex-wrap:wrap;gap:9px}
+.cor{flex:1 1 calc(33.333% - 6px);min-width:96px;min-height:64px;border-radius:13px;background:var(--surf);
+  border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:7px;font-size:12px;color:var(--mut);font-weight:600}
+.cor i{width:22px;height:22px;border-radius:11px;display:block;box-shadow:inset 0 0 0 1px var(--ring)}
+.cor i[data-c="neutro"] {background:linear-gradient(140deg,#8C97A6,#4A5563)}
+.cor i[data-c="violeta"]{background:linear-gradient(140deg,#9A80F5,#6242D6)}
+.cor i[data-c="azul"]   {background:linear-gradient(140deg,#5AA0F0,#1A63C4)}
+.cor i[data-c="verde"]  {background:linear-gradient(140deg,#2FBE86,#0B7A52)}
+.cor i[data-c="ambar"]  {background:linear-gradient(140deg,#E8A33C,#9C6106)}
+.cor i[data-c="carmim"] {background:linear-gradient(140deg,#EE6274,#AE1930)}
+.cor.sel{border-color:var(--tx);background:var(--surf2);box-shadow:0 0 0 1px var(--tx) inset;color:var(--tx)}
+.parada{display:flex;gap:11px;align-items:flex-start;font-size:13.5px;line-height:1.45;
+  padding:13px 15px;border-radius:13px;margin-bottom:14px;border:1px solid var(--line);
+  background:var(--surf);color:var(--mut)}
+.parada::before{content:"";width:8px;height:8px;border-radius:5px;flex:0 0 auto;margin-top:6px;background:var(--z4)}
+.parada.aviso{border-color:var(--z3)}
+.parada.aviso::before{background:var(--z3)}
+.parada.alerta{border-color:var(--z1);color:var(--tx)}
+.parada.alerta::before{background:var(--z1)}
+.avisoc{font-size:13px;line-height:1.45;padding:12px 14px;border-radius:12px;margin-top:11px;
+  border:1px solid var(--line);background:var(--surf2)}
+.avisoc.bom{border-color:var(--z4)}
+.avisoc.ruim{border-color:var(--z3);color:var(--z3)}
+.mt2{margin-top:16px}
 .pkbar{margin-bottom:14px}
 .pkbar .txt{margin-bottom:9px}
 .pkinfo{font-size:12px;color:var(--mut2);margin-top:9px;letter-spacing:.03em}
@@ -583,6 +626,8 @@ body.arrastando{user-select:none;-webkit-user-select:none}
   try {
     var t = localStorage.getItem("treino-tema");
     if (t === "claro" || t === "escuro" || t === "auto") h.setAttribute("data-tema", t);
+    const c = localStorage.getItem("treino-cor");
+    if (c && c !== "neutro") h.setAttribute("data-cor", c);
   } catch(e){}
 })();
 </script>
@@ -674,6 +719,7 @@ body.arrastando{user-select:none;-webkit-user-select:none}
       </div>
       <button id="goprox">Começar</button>
     </div>
+    <div class="parada" id="parada" style="display:none"></div>
     <div class="stats3" id="home-stats"></div>
     <div class="seclbl" id="lbl-ciclo">Seu ciclo</div>
     <div id="cards"></div>
@@ -795,6 +841,19 @@ body.arrastando{user-select:none;-webkit-user-select:none}
     <div id="pficha"></div>
     <div class="note">A automática é remontada sempre que você muda perfil, semana ou lugar. A sua fica como você deixou, guardada por lugar de treino.</div>
 
+    <div class="seclbl mt">Nome dos treinos</div>
+    <div class="opts" id="pnome"></div>
+    <div id="pnome-nota" class="note"></div>
+
+    <div class="seclbl mt">Lembrete no calendário</div>
+    <div class="qlbl">Em que dias você treina</div>
+    <div class="chips" id="pag-dias"></div>
+    <div class="qlbl mt2">A que horas</div>
+    <input class="txt" id="pag-hora" type="time" step="300" value="18:30">
+    <button class="btn ghost" id="pag-baixar">Baixar os treinos para o calendário</button>
+    <div id="pag-aviso" class="avisoc" style="display:none"></div>
+    <div class="note">Gera um arquivo com as próximas oito semanas de treino, já na ordem do seu ciclo, com a lista de exercícios em cada evento e um alerta uma hora antes. O celular avisa sozinho, com o app fechado. Ao trocar de ficha, baixe de novo.</div>
+
     <div class="seclbl mt">Imprimir a ficha</div>
     <button class="btn ghost" id="pimp-dia">Imprimir o próximo treino</button>
     <button class="btn ghost" id="pimp-sem">Imprimir a semana inteira</button>
@@ -805,7 +864,11 @@ body.arrastando{user-select:none;-webkit-user-select:none}
     <button class="btn ghost" id="paddlocal">Adicionar outro lugar</button>
     <div class="note">A ficha é montada só com o que existe no lugar. Confira a lista de cada um — é ela que decide quais exercícios entram.</div>
 
-    <div class="seclbl mt">Aparência</div>
+    <div class="seclbl mt">Cor do app</div>
+    <div class="cores" id="pcores"></div>
+    <div class="note">Muda o tom dos destaques e o brilho do fundo. Nada mexe nas cores de zona de esforço, que precisam continuar reconhecíveis.</div>
+
+    <div class="seclbl mt">Claro ou escuro</div>
     <div class="temas" id="ptemas">
       <button data-tm="auto"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="8.2"/><path d="M12 3.8a8.2 8.2 0 0 1 0 16.4z" fill="currentColor" stroke="none"/></svg>Automático</button>
       <button data-tm="claro"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="4.1"/><path d="M12 2.7v2.1M12 19.2v2.1M4.4 4.4l1.5 1.5M18.1 18.1l1.5 1.5M2.7 12h2.1M19.2 12h2.1M4.4 19.6l1.5-1.5M18.1 5.9l1.5-1.5"/></svg>Claro</button>
@@ -1320,7 +1383,8 @@ const DB = (function(){
   }
   const vazio = () => ({perfil:null, programa:null, semana:null, historico:[], rascunhos:{},
                         inicios:{}, cron:{}, usadas:{}, ultima:null, ultimoDia:0,
-                        locais:null, local:null, localDia:null, fichas:{}, modo:"auto", variacao:0});
+                        locais:null, local:null, localDia:null, fichas:{}, modo:"auto", variacao:0,
+                        agenda:{dias:[], hora:"18:30"}, nomeDia:"ciclo", cor:"neutro"});
   async function bruto(k){
     try {
       if (modo === "ws"){ const r = await window.storage.get(k,false); return r ? r.value : null; }
@@ -1503,6 +1567,123 @@ function programaAtual(){
 function chaveRasc(i){ return localAtual().id + ":" + i; }
 function assinatura(p){ return p ? p.dias.map(d => d.cod + ":" + d.it.map(x => x[0]).join(",")).join("|") : ""; }
 
+const CORES = [{v:"neutro",t:"Grafite"},{v:"violeta",t:"Violeta"},{v:"azul",t:"Azul"},
+               {v:"verde",t:"Verde"},{v:"ambar",t:"Âmbar"},{v:"carmim",t:"Carmim"}];
+function aplicarCor(c){
+  const h = document.documentElement;
+  if (!c || c === "neutro") h.removeAttribute("data-cor"); else h.setAttribute("data-cor", c);
+  try { localStorage.setItem("treino-cor", c || "neutro"); } catch(e){}
+}
+
+/* ==================== NOME DOS TREINOS ==================== */
+/* o código do dia (Superior A) continua sendo a chave interna do histórico;
+   isto muda só o que aparece na tela */
+function nomeDiaModo(){ return D.nomeDia || "ciclo"; }
+function podeSemana(){
+  const ag = (D.agenda && D.agenda.dias) || [];
+  const n = (D.programa || programaAtual()) ? programaAtual().dias.length : 0;
+  return ag.length > 0 && ag.length === n;
+}
+function rotuloDia(d, k){
+  if (!d) return "";
+  const modo = nomeDiaModo();
+  if (modo === "musculos" && d.foco) return d.foco;
+  if (modo === "semana" && podeSemana()){
+    const ag = D.agenda.dias, i = (typeof k === "number" ? k : indiceDoCod(d.cod));
+    if (i >= 0) return DIAS_SEM[ag[i % ag.length]];
+  }
+  return d.cod;
+}
+function indiceDoCod(cod){
+  try { const ds = programaAtual().dias;
+    for (let i = 0; i < ds.length; i++) if (ds[i].cod === cod) return i;
+  } catch(e){}
+  return -1;
+}
+function rotuloExemplo(modo){
+  try {
+    const d = programaAtual().dias[0];
+    if (modo === "musculos") return d.foco || d.cod;
+    if (modo === "semana") return podeSemana() ? DIAS_SEM[D.agenda.dias[0]] : "indisponível";
+    return d.cod;
+  } catch(e){ return ""; }
+}
+function rotuloCod(cod, foco){
+  const i = indiceDoCod(cod);
+  if (i < 0) return nomeDiaModo() === "musculos" && foco ? foco : cod;
+  return rotuloDia(programaAtual().dias[i], i);
+}
+
+/* ==================== LEMBRETE NO CALENDÁRIO ==================== */
+const DIAS_SEM = ["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"];
+const SEMANAS_ICS = 8;
+
+function escIcs(t){
+  return String(t||"").replace(/\\/g,"\\\\").replace(/;/g,"\\;").replace(/,/g,"\\,").replace(/\r?\n/g,"\\n");
+}
+function dobrar(l){
+  /* o formato exige linhas de no máximo 75 caracteres */
+  const out = [];
+  while (l.length > 74){ out.push(l.slice(0,74)); l = " " + l.slice(74); }
+  out.push(l);
+  return out.join("\r\n");
+}
+function carimbo(d, comZ){
+  const p2 = n => (n<10?"0":"") + n;
+  const base = d.getFullYear() + p2(d.getMonth()+1) + p2(d.getDate()) + "T" + p2(d.getHours()) + p2(d.getMinutes()) + "00";
+  if (!comZ) return base;
+  return d.getUTCFullYear() + p2(d.getUTCMonth()+1) + p2(d.getUTCDate()) + "T"
+       + p2(d.getUTCHours()) + p2(d.getUTCMinutes()) + p2(d.getUTCSeconds()) + "Z";
+}
+function gerarIcs(diasSemana, hora, minuto, semanas){
+  const prog = programaAtual(), dias = prog.dias;
+  if (!dias.length || !diasSemana.length) return null;
+  const agora = new Date();
+  const L = ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Treino//ficha//PT-BR","CALSCALE:GREGORIAN","METHOD:PUBLISH"];
+  let k = 0, criados = 0;
+  for (let sem = 0; sem < (semanas || SEMANAS_ICS); sem++){
+    for (let i = 0; i < 7; i++){
+      const dow = (i + 1) % 7;
+      if (diasSemana.indexOf(dow) < 0) continue;
+      const dt = new Date(agora.getFullYear(), agora.getMonth(), agora.getDate(), hora, minuto, 0);
+      const desloc = ((dow - agora.getDay()) + 7) % 7;
+      dt.setDate(dt.getDate() + desloc + sem*7);
+      if (dt <= agora) continue;
+      const d = dias[k % dias.length]; k++;
+      const fim = new Date(dt.getTime() + Math.max(30, d.min||45)*60000);
+      const lista = d.it.map(x => { const e = EX[x[0]]; if (!e) return "";
+        return "• " + e.n + " — " + (x[6] ? x[2] + " em " + x[1] + " blocos" : x[1] + " x " + x[2]); })
+        .filter(Boolean).join("\n");
+      L.push("BEGIN:VEVENT");
+      L.push(dobrar("UID:treino-" + carimbo(dt) + "-" + k + "@ficha"));
+      L.push("DTSTAMP:" + carimbo(agora, true));
+      L.push("DTSTART:" + carimbo(dt));
+      L.push("DTEND:" + carimbo(fim));
+      L.push(dobrar("SUMMARY:" + escIcs(rotuloDia(d, k-1) + " · " + (d.foco || "treino"))));
+      L.push(dobrar("DESCRIPTION:" + escIcs(lista + "\n\nCerca de " + (d.min||45) + " min · " + localAtual().nome)));
+      L.push(dobrar("LOCATION:" + escIcs(localAtual().nome)));
+      L.push("BEGIN:VALARM","TRIGGER:-PT60M","ACTION:DISPLAY",dobrar("DESCRIPTION:" + escIcs(rotuloDia(d, k-1) + " daqui a uma hora")),"END:VALARM");
+      L.push("END:VEVENT");
+      criados++;
+    }
+  }
+  L.push("END:VCALENDAR");
+  return criados ? {txt:L.join("\r\n"), n:criados} : null;
+}
+function baixarIcs(){
+  const dias = (D.agenda && D.agenda.dias) || [];
+  const hm = ((D.agenda && D.agenda.hora) || "18:30").split(":");
+  const r = gerarIcs(dias, parseInt(hm[0],10)||18, parseInt(hm[1],10)||30, SEMANAS_ICS);
+  if (!r) return null;
+  const blob = new Blob([r.txt], {type:"text/calendar;charset=utf-8"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "treino.ics";
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+  return r.n;
+}
+
 /* ======================== IMPRESSÃO ======================== */
 function htmlImpressao(dias){
   const pf = D.perfil || {}, loc = localAtual();
@@ -1513,7 +1694,7 @@ function htmlImpressao(dias){
       · ${esc(loc.nome)} · ${esc(hoje)}</p>` +
     dias.map(d => {
       const cols = Math.max.apply(null, d.it.map(x => x[1]).concat([1]));
-      return `<h2>${esc(d.cod)}<span>${esc(d.foco || "")} · cerca de ${d.min} min</span></h2>
+      return `<h2>${esc(rotuloCod(d.cod, d.foco))}<span>${esc(d.foco || "")} · cerca de ${d.min} min</span></h2>
       <table><thead><tr>
         <th class="exn">Exercício</th><th class="pr2">Prescrição</th><th class="pr2">Descanso</th>` +
         Array.apply(null, {length:cols}).map((_,i) => `<th class="s">${i+1}ª</th>`).join("") +
@@ -2197,6 +2378,25 @@ function renderSemanaHome(){
   $("#ajsem").onclick = () => renderSemana(true);
 }
 
+/* dias desde o último treino registrado */
+function diasParado(){
+  if (!D.historico || !D.historico.length) return null;
+  const ult = D.historico[D.historico.length-1].ts;
+  const d0 = new Date(ult); d0.setHours(0,0,0,0);
+  const hoje = new Date(); hoje.setHours(0,0,0,0);
+  return Math.max(0, Math.round((hoje - d0)/86400000));
+}
+function avisoParada(){
+  const n = diasParado(), meta = metaSemana();
+  if (n === null) return {t:"aviso", txt:"Você ainda não registrou nenhum treino. Comece pela sessão sugerida aqui embaixo."};
+  const folga = Math.ceil(7/meta) + 1;
+  if (n === 0) return {t:"ok", txt:"Treinou hoje. Descanso também faz parte."};
+  if (n === 1) return {t:"ok", txt:"Último treino ontem."};
+  if (n <= folga) return {t:"ok", txt:"Último treino há " + n + " dias, dentro do seu ritmo de " + meta + "x por semana."};
+  if (n < 14) return {t:"aviso", txt:n + " dias sem treinar. Sua meta é " + meta + "x por semana — dá para retomar hoje sem mudar nada na ficha."};
+  if (n < 28) return {t:"alerta", txt:n + " dias parado. Ao voltar, tire 10 a 20% da carga na primeira semana: a força cai antes do músculo e o corpo pede alguns treinos para recalibrar."};
+  return {t:"alerta", txt:Math.floor(n/30) >= 1 ? (n + " dias parado, mais de um mês. Recomece com metade da carga e duas séries por exercício na primeira semana, depois volte ao normal.") : ""};
+}
 function renderHome(){
   cabecalhoPerfil();
   $("#hlocal").style.display = listaLocais().length > 1 ? "flex" : "none";
@@ -2204,13 +2404,18 @@ function renderHome(){
   renderSemanaHome();
   const dias = programaAtual().dias;
   const i = D.ultimoDia % dias.length, prox = dias[i];
-  $("#prox").textContent = prox.cod;
+  $("#prox").textContent = rotuloCod(prox.cod, prox.foco);
   $("#proxtm").textContent = "≈ " + prox.min + " min · " + prox.foco;
 
   const agora = new Date(), mes = agora.getMonth(), ano = agora.getFullYear();
   const noMes = D.historico.filter(s => { const d = new Date(s.ts); return d.getMonth() === mes && d.getFullYear() === ano; });
   const t = D.historico.length;
   const media = t ? (D.historico.reduce((a,s) => a + s.nota, 0) / t).toFixed(1) : "—";
+  const av = avisoParada();
+  $("#parada").className = "parada " + av.t;
+  $("#parada").textContent = av.txt;
+  $("#parada").style.display = av.txt ? "flex" : "none";
+
   $("#home-stats").innerHTML =
     `<div class="st"><div class="v">${t}</div><div class="l">Sessões</div></div>
      <div class="st"><div class="v">${noMes.length}</div><div class="l">Neste mês</div></div>
@@ -2224,7 +2429,7 @@ function renderHome(){
     return `<button class="card" data-d="${k}">
       <div class="n">${String(k+1).padStart(2,"0")}</div>
       <div style="flex:1;min-width:0">
-        <div class="cod">${esc(d.cod)}</div>
+        <div class="cod">${esc(rotuloDia(d, k))}</div>
         <div class="fo">${esc(d.foco)} · ≈ ${d.min} min</div>
         <div class="meta">${rasc ? "sessão em andamento" :
           ses.length ? ses.length + (ses.length>1?" sessões":" sessão") + " · última em " + dataBr(ult.ts).split(" · ")[0]
@@ -2423,7 +2628,7 @@ function abrirTreino(i, jaEscolhido){
   if (!D.inicios[chaveRasc(i)]) { D.inicios[chaveRasc(i)] = Date.now(); DB.gravar(); }
   cronDe(i);
 
-  $("#ttl").textContent = d.cod;
+  $("#ttl").textContent = rotuloCod(d.cod, d.foco);
   $("#stl").textContent = d.foco;
 
   const nLocais = listaLocais().length;
@@ -2605,7 +2810,7 @@ function proximoPasso(r){
   const hoje = topKg(dadosSessao[0]);
   const antes = r.ant ? topKg(r.ant.sets && r.ant.sets[0]) : 0;
   if (!r.ant)
-    return `Essa é a sua linha de base em <b>${esc(d.cod)}</b>. Na próxima vez, tente repetir as mesmas cargas somando uma repetição por série. ` + PASSO_OBJ[D.perfil.objetivo];
+    return `Essa é a sua linha de base em <b>${esc(rotuloCod(d.cod, d.foco))}</b>. Na próxima vez, tente repetir as mesmas cargas somando uma repetição por série. ` + PASSO_OBJ[D.perfil.objetivo];
   if (hoje && antes && hoje === antes)
     return `Você repetiu <b>${num(hoje)} kg</b> no ${esc(e0.n.toLowerCase())} pela segunda vez com o treino completo. É o momento de subir de 2 a 5%. ` + PASSO_OBJ[D.perfil.objetivo];
   if (hoje > antes && antes)
@@ -2615,7 +2820,7 @@ function proximoPasso(r){
 
 function renderResultado(r){
   const msg = escolherMensagem(r.nota), cor = corNota(r.nota);
-  $("#ttl").textContent = programaAtual().dias[diaAtivo].cod;
+  $("#ttl").textContent = rotuloDia(programaAtual().dias[diaAtivo], diaAtivo);
   $("#stl").textContent = "Resultado da sessão";
   $("#rnota").textContent = r.nota;
   $("#rnota").style.color = cor;
@@ -2816,7 +3021,7 @@ function blocoFicha(s){
 
   return `<div class="fhd">
       <div class="fd">${dt.toLocaleDateString("pt-BR",{weekday:"long",day:"2-digit",month:"long",year:"numeric"})} · ${dt.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"})}</div>
-      <div class="fc">${esc(s.cod)}</div>
+      <div class="fc">${esc(rotuloCod(s.cod, s.foco))}</div>
       <div class="ff">${esc(s.foco||"")}</div>
       <div class="fm">
         <div>Nota<b style="color:${corNota(s.nota)}">${s.nota}</b></div>
@@ -2916,6 +3121,54 @@ function renderPerfil(){
     D.rascunhos = {}; D.inicios = {}; D.cron = {}; D.ultimoDia = 0;
     await DB.gravar();
     renderPerfil();
+  };
+  const modos = [
+    {v:"ciclo",     t:"Ciclo",         s:"Superior A, Inferior A — segue a ordem, não o calendário"},
+    {v:"musculos",  t:"Músculos",      s:"Peito · Costas · Ombro — diz o que você vai treinar"},
+    {v:"semana",    t:"Dia da semana", s:"Segunda, Quarta, Sexta — exige os dias marcados abaixo"}];
+  $("#pnome").innerHTML = modos.map(m =>
+    `<button class="opt wide${nomeDiaModo()===m.v?" sel":""}" data-nd="${m.v}">
+       <div class="t">${esc(m.t)}<span class="eqtag">${esc(rotuloExemplo(m.v))}</span></div>
+       <div class="s">${esc(m.s)}</div></button>`).join("");
+  $("#pnome").querySelectorAll("[data-nd]").forEach(b => b.onclick = async () => {
+    D.nomeDia = b.dataset.nd; await DB.gravar(); renderPerfil();
+  });
+  const nd = programaAtual().dias.length, agd = ((D.agenda||{}).dias||[]).length;
+  $("#pnome-nota").textContent = nomeDiaModo() === "semana" && !podeSemana()
+    ? "Para usar o dia da semana, marque exatamente " + nd + " dias no lembrete do calendário abaixo. Hoje há " + agd + " marcado" + (agd===1?"":"s") + ", então o nome continua o do ciclo."
+    : "O nome só muda o que aparece na tela. O histórico continua ligado ao ciclo, então nada se perde ao trocar.";
+
+  $("#pcores").innerHTML = CORES.map(c =>
+    `<button class="cor${(D.cor||"neutro")===c.v?" sel":""}" data-cor="${c.v}" aria-label="${esc(c.t)}">
+       <i data-c="${c.v}"></i><span>${esc(c.t)}</span></button>`).join("");
+  $("#pcores").querySelectorAll("[data-cor]").forEach(b => b.onclick = async () => {
+    D.cor = b.dataset.cor; aplicarCor(D.cor); await DB.gravar(); renderPerfil();
+  });
+
+  const ag = D.agenda || (D.agenda = {dias:[], hora:"18:30"});
+  $("#pag-dias").innerHTML = DIAS_SEM.map((n,i) =>
+    `<button class="chip${ag.dias.indexOf(i)>=0?" sel":""}" data-dw="${i}">${esc(n.slice(0,3))}</button>`).join("");
+  $("#pag-dias").querySelectorAll("[data-dw]").forEach(b => b.onclick = async () => {
+    const i = parseInt(b.dataset.dw,10), j = ag.dias.indexOf(i);
+    if (j >= 0) ag.dias.splice(j,1); else ag.dias.push(i);
+    ag.dias.sort();
+    await DB.gravar();
+    renderPerfil();
+  });
+  $("#pag-hora").value = ag.hora || "18:30";
+  $("#pag-hora").onchange = async () => { ag.hora = $("#pag-hora").value || "18:30"; await DB.gravar(); };
+  $("#pag-baixar").onclick = () => {
+    const a = $("#pag-aviso");
+    if (!ag.dias.length){
+      a.className = "avisoc ruim"; a.style.display = "block";
+      a.textContent = "Escolha pelo menos um dia da semana acima.";
+      return;
+    }
+    const n = baixarIcs();
+    a.className = "avisoc bom"; a.style.display = "block";
+    a.textContent = n
+      ? n + " treinos gerados. Abra o arquivo baixado e confirme para adicionar ao calendário do celular."
+      : "Não foi possível gerar os eventos.";
   };
   $("#pimp-dia").onclick = () => imprimir("dia");
   $("#pimp-sem").onclick = () => imprimir("semana");
@@ -3064,6 +3317,7 @@ $("#fimp").onchange = e => {
 /* ============================ INÍCIO ============================ */
 (async function(){
   D = await DB.ler();
+  if (D.cor) aplicarCor(D.cor);
   if (!D.perfil || !D.programa || !D.programa.dias) abrirSetup(false);
   else if (!D.semana || D.semana.chave !== chaveSemana(Date.now())) renderSemana(false);
   else irAba("home");
