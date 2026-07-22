@@ -47,11 +47,23 @@ html[data-cor="azul"]   { --acc:#2A76D0; --inv:#FFFFFF; --tint:46,127,224;  --ti
 html[data-cor="verde"]  { --acc:#10865E; --inv:#FFFFFF; --tint:19,153,107;  --tintA:.20 }
 html[data-cor="ambar"]  { --acc:#A5680F; --inv:#FFFFFF; --tint:192,122,18;  --tintA:.19 }
 html[data-cor="carmim"] { --acc:#D6394D; --inv:#FFFFFF; --tint:214,57,77;   --tintA:.19 }
+html[data-cor="laranja"]{ --acc:#B95608; --inv:#FFFFFF; --tint:243,124,32;  --tintA:.20 }
+html[data-cor="ciano"]  { --acc:#00787F; --inv:#FFFFFF; --tint:34,190,199;  --tintA:.19 }
+html[data-cor="lima"]   { --acc:#4B7C10; --inv:#FFFFFF; --tint:132,204,45;  --tintA:.18 }
+html[data-cor="rosa"]   { --acc:#C43470; --inv:#FFFFFF; --tint:236,86,153;  --tintA:.19 }
+html[data-cor="indigo"] { --acc:#4C55D8; --inv:#FFFFFF; --tint:96,105,232;  --tintA:.21 }
+html[data-cor="bronze"] { --acc:#8E6A3C; --inv:#FFFFFF; --tint:180,142,92;  --tintA:.17 }
 html[data-tema="claro"][data-cor="violeta"]{ --acc:#5B3FD1; --tint:91,63,209;  --tintA:.15 }
 html[data-tema="claro"][data-cor="azul"]   { --acc:#1668CC; --tint:22,104,204; --tintA:.15 }
 html[data-tema="claro"][data-cor="verde"]  { --acc:#0C7551; --tint:14,138,95;  --tintA:.15 }
 html[data-tema="claro"][data-cor="ambar"]  { --acc:#8F5A00; --tint:143,90,0;   --tintA:.14 }
 html[data-tema="claro"][data-cor="carmim"] { --acc:#B2172C; --tint:178,23,44;  --tintA:.14 }
+html[data-tema="claro"][data-cor="laranja"]{ --acc:#A8490A; --tint:210,98,12;  --tintA:.14 }
+html[data-tema="claro"][data-cor="ciano"]  { --acc:#046068; --tint:4,96,104;   --tintA:.14 }
+html[data-tema="claro"][data-cor="lima"]   { --acc:#3D650C; --tint:61,101,12;  --tintA:.14 }
+html[data-tema="claro"][data-cor="rosa"]   { --acc:#A82659; --tint:168,38,89;  --tintA:.14 }
+html[data-tema="claro"][data-cor="indigo"] { --acc:#3B44C4; --tint:59,68,196;  --tintA:.15 }
+html[data-tema="claro"][data-cor="bronze"] { --acc:#71542E; --tint:113,84,46;  --tintA:.13 }
 html[data-tema="claro"]{
   color-scheme:light;
   --bg:#EBEEF3; --bg2:#F3F5F9; --surf:#FFFFFF; --surf2:#F0F3F7;
@@ -70,6 +82,12 @@ html[data-tema="claro"]{
   html[data-tema="auto"][data-cor="verde"]  { --acc:#0C7551; --tint:14,138,95;  --tintA:.15 }
   html[data-tema="auto"][data-cor="ambar"]  { --acc:#8F5A00; --tint:143,90,0;   --tintA:.14 }
   html[data-tema="auto"][data-cor="carmim"] { --acc:#B2172C; --tint:178,23,44;  --tintA:.14 }
+  html[data-tema="auto"][data-cor="laranja"]{ --acc:#A8490A; --tint:210,98,12;  --tintA:.14 }
+  html[data-tema="auto"][data-cor="ciano"]  { --acc:#046068; --tint:4,96,104;   --tintA:.14 }
+  html[data-tema="auto"][data-cor="lima"]   { --acc:#3D650C; --tint:61,101,12;  --tintA:.14 }
+  html[data-tema="auto"][data-cor="rosa"]   { --acc:#A82659; --tint:168,38,89;  --tintA:.14 }
+  html[data-tema="auto"][data-cor="indigo"] { --acc:#3B44C4; --tint:59,68,196;  --tintA:.15 }
+  html[data-tema="auto"][data-cor="bronze"] { --acc:#71542E; --tint:113,84,46;  --tintA:.13 }
   html[data-tema="auto"]{
   color-scheme:light;
   --bg:#EBEEF3; --bg2:#F3F5F9; --surf:#FFFFFF; --surf2:#F0F3F7;
@@ -364,6 +382,55 @@ html:not(.js) .top,html:not(.js) .wrap,html:not(.js) .tabs{display:none!importan
 .volchip b{color:var(--tx);font-family:var(--cond);font-size:14px;margin-left:6px}
 .btn[disabled]{opacity:.5}
 .fetabs{position:sticky;z-index:5;background:var(--bg);padding:9px 0 8px;margin-top:-9px}
+/* ---------- selo de movimento ---------- */
+.selo{width:38px;height:38px;border-radius:12px;flex:0 0 auto;display:flex;align-items:center;
+  justify-content:center;background:var(--surf2);border:1px solid var(--line)}
+.selo svg{width:21px;height:21px}
+.selo.z1{color:var(--z1)} .selo.z2{color:var(--z2)} .selo.z3{color:var(--z3)}
+.selo.z4{color:var(--z4)} .selo.z5{color:var(--z5)}
+.selo.mini{width:32px;height:32px;border-radius:10px}
+.selo.mini svg{width:18px;height:18px}
+
+/* ---------- estilo em relevo ---------- */
+html[data-estilo="relevo"]{
+  --surf:var(--bg2); --surf2:var(--bg);
+  --nout:7px 7px 15px rgba(0,0,0,.55), -6px -6px 13px rgba(255,255,255,.035);
+  --nin:inset 5px 5px 11px rgba(0,0,0,.5), inset -4px -4px 10px rgba(255,255,255,.035);
+}
+html[data-tema="claro"][data-estilo="relevo"], html[data-tema="auto"][data-estilo="relevo"]{
+  --nout:7px 7px 15px rgba(15,23,32,.10), -6px -6px 13px rgba(255,255,255,.95);
+  --nin:inset 5px 5px 11px rgba(15,23,32,.10), inset -4px -4px 10px rgba(255,255,255,.9);
+}
+html[data-estilo="relevo"] .card, html[data-estilo="relevo"] .opt,
+html[data-estilo="relevo"] .hrow, html[data-estilo="relevo"] .ex,
+html[data-estilo="relevo"] .prow, html[data-estilo="relevo"] .dica,
+html[data-estilo="relevo"] .metodo, html[data-estilo="relevo"] .fcd,
+html[data-estilo="relevo"] .pki, html[data-estilo="relevo"] .cor,
+html[data-estilo="relevo"] .parada, html[data-estilo="relevo"] .avisoc,
+html[data-estilo="relevo"] .st, html[data-estilo="relevo"] .hero,
+html[data-estilo="relevo"] .localbar, html[data-estilo="relevo"] .selo,
+html[data-estilo="relevo"] .cbox, html[data-estilo="relevo"] .fetab,
+html[data-estilo="relevo"] .chip, html[data-estilo="relevo"] .dbtn,
+html[data-estilo="relevo"] .temas button, html[data-estilo="relevo"] .eqart{
+  border-color:transparent; box-shadow:var(--nout)
+}
+html[data-estilo="relevo"] .fld, html[data-estilo="relevo"] .txt,
+html[data-estilo="relevo"] .opt.sel, html[data-estilo="relevo"] .cor.sel,
+html[data-estilo="relevo"] .temas button.sel{
+  border-color:transparent; box-shadow:var(--nin)
+}
+html[data-estilo="relevo"] .chip.sel, html[data-estilo="relevo"] .fetab.sel,
+html[data-estilo="relevo"] .dbtn.on, html[data-estilo="relevo"] .dbtn.trab{
+  box-shadow:var(--nin)
+}
+html[data-estilo="relevo"] .btn{box-shadow:var(--nout)}
+html[data-estilo="relevo"] .btn:active{box-shadow:var(--nin)}
+html[data-estilo="relevo"] .opt:active, html[data-estilo="relevo"] .hrow:active,
+html[data-estilo="relevo"] .card:active{box-shadow:var(--nin)}
+html[data-estilo="relevo"] .cbox.run, html[data-estilo="relevo"] .cbox.ok,
+html[data-estilo="relevo"] .cbox.over, html[data-estilo="relevo"] .cbox.trab,
+html[data-estilo="relevo"] .cbox.pau{box-shadow:var(--nout)}
+
 .cores{display:flex;flex-wrap:wrap;gap:9px}
 .cor{flex:1 1 calc(33.333% - 6px);min-width:96px;min-height:64px;border-radius:13px;background:var(--surf);
   border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -375,6 +442,12 @@ html:not(.js) .top,html:not(.js) .wrap,html:not(.js) .tabs{display:none!importan
 .cor i[data-c="verde"]  {background:linear-gradient(140deg,#2FBE86,#0B7A52)}
 .cor i[data-c="ambar"]  {background:linear-gradient(140deg,#E8A33C,#9C6106)}
 .cor i[data-c="carmim"] {background:linear-gradient(140deg,#EE6274,#AE1930)}
+.cor i[data-c="laranja"]{background:linear-gradient(140deg,#FB9A3E,#C8560A)}
+.cor i[data-c="ciano"]  {background:linear-gradient(140deg,#3FD6DE,#046068)}
+.cor i[data-c="lima"]   {background:linear-gradient(140deg,#A9E05A,#3D650C)}
+.cor i[data-c="rosa"]   {background:linear-gradient(140deg,#F585B6,#A82659)}
+.cor i[data-c="indigo"] {background:linear-gradient(140deg,#828AF5,#3B44C4)}
+.cor i[data-c="bronze"] {background:linear-gradient(140deg,#C9A87A,#71542E)}
 .cor.sel{border-color:var(--tx);background:var(--surf2);box-shadow:0 0 0 1px var(--tx) inset;color:var(--tx)}
 .parada{display:flex;gap:11px;align-items:flex-start;font-size:13.5px;line-height:1.45;
   padding:13px 15px;border-radius:13px;margin-bottom:14px;border:1px solid var(--line);
@@ -448,7 +521,7 @@ body.arrastando{user-select:none;-webkit-user-select:none}
 .ex.bs{border-left:3px solid var(--z5)}
 .bsb{font-family:var(--cond);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
   color:var(--z5);font-weight:700;padding:10px 14px 0}
-.ex-h{display:flex;align-items:flex-start;gap:10px;padding:14px;width:100%;text-align:left}
+.ex-h{display:flex;align-items:flex-start;gap:11px;padding:13px 14px;width:100%;text-align:left}
 .dot{width:9px;height:9px;border-radius:50%;flex:0 0 auto;margin-top:6px}
 .ex-h .nm{font-weight:600;font-size:15px;line-height:1.25;display:block}
 .ex-h .rx{font-size:13px;color:var(--mut);margin-top:3px;display:block}
@@ -545,7 +618,7 @@ body.arrastando{user-select:none;-webkit-user-select:none}
   font-family:var(--cond);font-weight:700}
 .fex{background:var(--surf);border:1px solid var(--line);border-radius:13px;
   padding:13px 14px;margin-bottom:9px;box-shadow:var(--sh)}
-.fex .fn{font-weight:600;font-size:14.5px;display:flex;align-items:flex-start;gap:9px}
+.fex .fn{font-weight:600;font-size:14.5px;display:flex;align-items:center;gap:10px}
 .fex .fr{font-size:12.5px;color:var(--mut2);margin-top:3px;margin-left:18px}
 .fset{display:flex;gap:6px;flex-wrap:wrap;margin-top:11px;margin-left:18px}
 .fchip{background:var(--surf2);border:1px solid var(--line);border-radius:9px;padding:5px 9px;
@@ -628,6 +701,8 @@ body.arrastando{user-select:none;-webkit-user-select:none}
     if (t === "claro" || t === "escuro" || t === "auto") h.setAttribute("data-tema", t);
     const c = localStorage.getItem("treino-cor");
     if (c && c !== "neutro") h.setAttribute("data-cor", c);
+    const es = localStorage.getItem("treino-estilo");
+    if (es === "relevo") h.setAttribute("data-estilo", "relevo");
   } catch(e){}
 })();
 </script>
@@ -863,6 +938,10 @@ body.arrastando{user-select:none;-webkit-user-select:none}
     <div id="plocais"></div>
     <button class="btn ghost" id="paddlocal">Adicionar outro lugar</button>
     <div class="note">A ficha é montada só com o que existe no lugar. Confira a lista de cada um — é ela que decide quais exercícios entram.</div>
+
+    <div class="seclbl mt">Estilo</div>
+    <div class="opts" id="pestilo"></div>
+    <div class="note">O relevo dá volume às superfícies, como se os cartões saíssem do fundo. O plano é mais seco e tem contraste um pouco maior.</div>
 
     <div class="seclbl mt">Cor do app</div>
     <div class="cores" id="pcores"></div>
@@ -1384,7 +1463,7 @@ const DB = (function(){
   const vazio = () => ({perfil:null, programa:null, semana:null, historico:[], rascunhos:{},
                         inicios:{}, cron:{}, usadas:{}, ultima:null, ultimoDia:0,
                         locais:null, local:null, localDia:null, fichas:{}, modo:"auto", variacao:0,
-                        agenda:{dias:[], hora:"18:30"}, nomeDia:"ciclo", cor:"neutro"});
+                        agenda:{dias:[], hora:"18:30"}, nomeDia:"ciclo", cor:"neutro", estilo:"plano"});
   async function bruto(k){
     try {
       if (modo === "ws"){ const r = await window.storage.get(k,false); return r ? r.value : null; }
@@ -1567,8 +1646,41 @@ function programaAtual(){
 function chaveRasc(i){ return localAtual().id + ":" + i; }
 function assinatura(p){ return p ? p.dias.map(d => d.cod + ":" + d.it.map(x => x[0]).join(",")).join("|") : ""; }
 
-const CORES = [{v:"neutro",t:"Grafite"},{v:"violeta",t:"Violeta"},{v:"azul",t:"Azul"},
-               {v:"verde",t:"Verde"},{v:"ambar",t:"Âmbar"},{v:"carmim",t:"Carmim"}];
+/* um ícone por padrão de movimento — 13 desenhos cobrem os 90 exercícios */
+const IC_MOV = {
+pe_h:'<path d="M4 7v10"/><path d="M20 4v16"/><path d="M4 10h9M4 14h9"/><path d="M13.5 9.5 17 12l-3.5 2.5"/>',
+pe_v:'<path d="M4 5h16"/><path d="M8 5v3M16 5v3"/><path d="M9 21v-5a3 3 0 0 1 6 0v5"/><path d="M12 16V9"/><path d="M9.5 11 12 8.5 14.5 11"/>',
+pu_v:'<path d="M3 5h18"/><path d="M7 5v3M17 5v3"/><circle cx="12" cy="11.5" r="2"/><path d="M12 13.5V18"/><path d="M9.5 21.5 12 18l2.5 3.5"/>',
+pu_h:'<path d="M20 5v14"/><path d="M20 12H7"/><path d="M10.5 8.5 7 12l3.5 3.5"/><path d="M4 8v8"/>',
+ombro:'<circle cx="12" cy="5.5" r="2"/><path d="M12 7.5v7"/><path d="M12 10 4.5 7.5M12 10l7.5-2.5"/><path d="M9.5 21.5 12 14.5l2.5 7"/>',
+bic:'<path d="M5 20v-6a5 5 0 0 1 5-5h3.5"/><path d="M13.5 9A4.5 4.5 0 0 1 18 13.5V20"/><path d="M9.5 7a2.5 2.5 0 0 1 5 0v2"/>',
+tri:'<circle cx="5" cy="6" r="1.8"/><path d="M6.5 7 13 10.5"/><path d="M13 10.5 17 8"/><path d="M17 8l2 11"/><path d="M13 10.5 12 20"/>',
+quad:'<path d="M4 5h16"/><path d="M8 5v3M16 5v3"/><circle cx="12" cy="11" r="1.8"/><path d="M12 13v3l-3 3v3M12 16l3 3v3"/>',
+post:'<circle cx="5.5" cy="6.5" r="1.8"/><path d="M7 7.5 15 11"/><path d="M15 11v9"/><path d="M10 17.5h10M10 20.5h10"/>',
+glu:'<path d="M3 19h3.5"/><path d="M6.5 19 11 12l5.5 3"/><path d="M16.5 15H21"/><circle cx="19" cy="19.5" r="1.7"/><path d="M11 12V8"/>',
+pant:'<path d="M9.5 3.5v9.5"/><path d="M9.5 13c0 3.4 2.3 5.5 5.4 5.5H19"/><path d="M5.5 21.5h13"/>',
+core:'<path d="M4 17.5h16"/><path d="M6.5 17.5 9 12l9-2"/><circle cx="19.5" cy="8.5" r="1.8"/><path d="M12.5 10.5v7"/>',
+cond:'<circle cx="14.5" cy="5" r="2"/><path d="M13.5 8 10 12.5l3.5 3v6"/><path d="M10 12.5 5.5 13.5"/><path d="M16.5 10.5 19 14"/>'
+};
+function iconeMov(id){
+  const e = EX[id] || {}, d = IC_MOV[e.p] || IC_MOV.core;
+  return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" '
+       + 'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>';
+}
+function selo(id){
+  const e = EX[id] || {};
+  return '<span class="selo z' + (e.z || 3) + '">' + iconeMov(id) + '</span>';
+}
+
+const CORES = [{v:"neutro",t:"Grafite"},{v:"laranja",t:"Laranja"},{v:"violeta",t:"Violeta"},
+               {v:"azul",t:"Azul"},{v:"ciano",t:"Ciano"},{v:"verde",t:"Verde"},
+               {v:"lima",t:"Lima"},{v:"ambar",t:"Âmbar"},{v:"carmim",t:"Carmim"},
+               {v:"rosa",t:"Rosa"},{v:"indigo",t:"Índigo"},{v:"bronze",t:"Bronze"}];
+function aplicarEstilo(e){
+  const h = document.documentElement;
+  if (!e || e === "plano") h.removeAttribute("data-estilo"); else h.setAttribute("data-estilo", e);
+  try { localStorage.setItem("treino-estilo", e || "plano"); } catch(err){}
+}
 function aplicarCor(c){
   const h = document.documentElement;
   if (!c || c === "neutro") h.removeAttribute("data-cor"); else h.setAttribute("data-cor", c);
@@ -1855,7 +1967,7 @@ function renderFedit(){
     return `<div class="fcd${feAberto===i?" ab":""}" data-i="${i}">
       <div class="fcr">
         <span class="fh" data-h="${i}" aria-hidden="true">⠿</span>
-        <span class="dot" style="background:${CORZ[e.z]}"></span>
+        <span class="selo mini z${e.z}">${iconeMov(x[0])}</span>
         <button class="fct" data-t="${i}">
           <span class="fcn">${esc(e.n)}</span>
           <span class="fcs">${linha}</span>
@@ -1930,7 +2042,7 @@ function listaPicker(){
       const e = EX[id], acima = (e.nv || 1) > nivel;
       return `<div class="pki${usados[id]?" ja":""}">
         <span class="pkh" data-pk="${id}" aria-hidden="true">⠿</span>
-        <span class="dot" style="background:${CORZ[e.z]}"></span>
+        <span class="selo mini z${e.z}">${iconeMov(id)}</span>
         <button class="pkb" data-add="${id}" aria-label="Adicionar ${esc(e.n)} a este dia">
           <span class="pkn">${esc(e.n)}</span>${usados[id]?"<b>já está</b>":acima?"<b>acima do nível</b>":""}</button>
       </div>`;
@@ -2643,7 +2755,7 @@ function abrirTreino(i, jaEscolhido){
     return `<div class="ex${par ? " bs" : ""}">
       ${par ? `<div class="bsb">Série dupla ${par}${primeiro ? " · alterne com o próximo, sem descanso" : ""}</div>` : ""}
       <button class="ex-h" data-t="${k}">
-        <span class="dot" style="background:${CORZ[e.z]}"></span>
+        <span class="selo z${e.z}">${iconeMov(it[0])}</span>
         <span style="flex:1;min-width:0">
           <span class="nm">${esc(e.n)}</span>
           <span class="rx">${bls ? esc(it[2]) + " em " + it[1] + " blocos · sem parar"
@@ -3012,7 +3124,7 @@ function blocoFicha(s){
       return `<span class="fchip"><b>${rp}</b> reps${td}</span>`;
     }).join("");
     return `<div class="fex">
-      <div class="fn"><span class="dot" style="background:${CORZ[e.z]};margin-top:6px"></span>${esc(e.n)}</div>
+      <div class="fn"><span class="selo mini z${e.z}">${iconeMov(x[0])}</span>${esc(e.n)}</div>
       <div class="fr">${x[6] ? esc(x[2]) + " em " + x[1] + " blocos · sem parar"
         : x[1] + " × " + esc(x[2]) + (e.l?" por lado":"") + " · descanso " + esc(x[3]) + (x[5]?" · série dupla "+x[5]:"")}</div>
       <div class="fset">${chips || '<span class="fchip zero">sem registro</span>'}</div>
@@ -3137,6 +3249,15 @@ function renderPerfil(){
   $("#pnome-nota").textContent = nomeDiaModo() === "semana" && !podeSemana()
     ? "Para usar o dia da semana, marque exatamente " + nd + " dias no lembrete do calendário abaixo. Hoje há " + agd + " marcado" + (agd===1?"":"s") + ", então o nome continua o do ciclo."
     : "O nome só muda o que aparece na tela. O histórico continua ligado ao ciclo, então nada se perde ao trocar.";
+
+  const estilos = [{v:"plano",t:"Plano",s:"Cartões com borda fina, contraste máximo"},
+                   {v:"relevo",t:"Relevo",s:"Superfícies moldadas na sombra, sem borda"}];
+  $("#pestilo").innerHTML = estilos.map(e =>
+    `<button class="opt${(D.estilo||"plano")===e.v?" sel":""}" data-es="${e.v}">
+       <div class="t">${esc(e.t)}</div><div class="s">${esc(e.s)}</div></button>`).join("");
+  $("#pestilo").querySelectorAll("[data-es]").forEach(b => b.onclick = async () => {
+    D.estilo = b.dataset.es; aplicarEstilo(D.estilo); await DB.gravar(); renderPerfil();
+  });
 
   $("#pcores").innerHTML = CORES.map(c =>
     `<button class="cor${(D.cor||"neutro")===c.v?" sel":""}" data-cor="${c.v}" aria-label="${esc(c.t)}">
@@ -3318,6 +3439,7 @@ $("#fimp").onchange = e => {
 (async function(){
   D = await DB.ler();
   if (D.cor) aplicarCor(D.cor);
+  if (D.estilo) aplicarEstilo(D.estilo);
   if (!D.perfil || !D.programa || !D.programa.dias) abrirSetup(false);
   else if (!D.semana || D.semana.chave !== chaveSemana(Date.now())) renderSemana(false);
   else irAba("home");
